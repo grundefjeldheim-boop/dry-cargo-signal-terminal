@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<script type="application/json" id="cowork-artifact-meta">
+{
+  "name": "Dry Cargo Signal Terminal",
+  "schemaVersion": 1,
+  "description": "Dry Cargo Signal Terminal: four-tab dashboard (oil price, bunker price, signal, noise) applying Martin Stopford's maritime economics framework to distinguish structural dry bulk supply/demand signals from short-term rate noise. Refreshed daily via scheduled web search at 21:00."
+}
+</script>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; background:#f4f3ef; color:#1c1c1a; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 20px 20px 40px; }
+  header { display:flex; justify-content:space-between; align-items:flex-end; border-bottom: 2px solid #1c1c1a; padding-bottom: 12px; margin-bottom: 4px; }
+  h1 { font-size: 22px; font-weight: 700; margin:0; letter-spacing: 0.3px; }
+  .sub { font-size: 12px; color:#5f5e5a; margin-top:2px; }
+  .updated { font-size: 11px; color:#5f5e5a; text-align:right; font-family: "SF Mono", Consolas, monospace; max-width: 260px; }
+  nav { display:flex; gap:4px; margin: 16px 0 20px; border-bottom: 1px solid #d3d1c7; }
+  .tabbtn { font-family: inherit; font-size: 13px; font-weight: 600; padding: 10px 14px; border:none; background:transparent; color:#5f5e5a; cursor:pointer; border-bottom: 2px solid transparent; margin-bottom:-1px; }
+  .tabbtn.active { color:#1c1c1a; border-bottom-color:#0f6e56; }
+  .tabbtn:hover { color:#1c1c1a; }
+  .panel { display:none; }
+  .panel.active { display:block; }
+  .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap:12px; margin-bottom:20px; }
+  .card { background:#fff; border:1px solid #d3d1c7; border-radius:8px; padding:14px 16px; }
+  .card .label { font-size:11px; text-transform:uppercase; letter-spacing:0.5px; color:#5f5e5a; margin-bottom:6px; }
+  .card .value { font-size:22px; font-weight:700; }
+  .card .delta { font-size:12px; margin-top:4px; }
+  .up { color:#3b6d11; }
+  .down { color:#a32d2d; }
+  .flat { color:#5f5e5a; }
+  section h2 { font-size:15px; font-weight:700; margin: 22px 0 8px; }
+  section p { font-size:13.5px; line-height:1.6; color:#2c2c2a; margin: 0 0 10px; }
+  .note { background:#fbf6e8; border:1px solid #e8dcaf; border-left:3px solid #ba7517; border-radius:4px; padding:10px 12px; font-size:12.5px; line-height:1.55; margin: 12px 0; }
+  .signalbox { border-left:3px solid #0f6e56; background:#eaf3ee; }
+  .noisebox { border-left:3px solid #993c1d; background:#faece7; }
+  table { width:100%; border-collapse:collapse; font-size:12.5px; margin: 8px 0 16px; }
+  th, td { text-align:left; padding:7px 8px; border-bottom:1px solid #e5e3da; }
+  th { color:#5f5e5a; font-weight:600; font-size:11px; text-transform:uppercase; letter-spacing:0.3px; }
+  .tag { display:inline-block; font-size:10.5px; font-weight:700; padding:2px 7px; border-radius:3px; letter-spacing:0.3px; }
+  .tag.signal { background:#c0dd97; color:#173404; }
+  .tag.noise { background:#f0997b; color:#4a1b0c; }
+  footer { margin-top: 28px; padding-top: 12px; border-top:1px solid #d3d1c7; font-size:11px; color:#5f5e5a; }
+  .verdict { background:#1c1c1a; color:#f4f3ef; border-radius:8px; padding:16px 18px; margin: 18px 0; }
+  .verdict .label { font-size:11px; text-transform:uppercase; letter-spacing:0.5px; color:#b4b2a9; margin-bottom:6px; }
+  .verdict p { color:#f4f3ef; font-size:13.5px; margin:0; }
+  .articles { margin-top: 18px; }
+  .articles h2 { font-size:15px; font-weight:700; margin: 22px 0 10px; }
+  .article { background:#fff; border:1px solid #d3d1c7; border-radius:8px; padding:12px 14px; margin-bottom:10px; }
+  .art-head { font-size:14px; font-weight:700; margin-bottom:3px; }
+  .art-meta { font-size:11.5px; color:#5f5e5a; margin-bottom:8px; }
+  .art-meta .sep { margin: 0 6px; color:#b4b2a9; }
+  .stopford { font-size:12.5px; line-height:1.55; color:#2c2c2a; border-top:1px dashed #d3d1c7; padding-top:8px; margin-top:6px; }
+  .stopford-label { font-weight:700; color:#0f6e56; }
+  .chapter { display:block; font-size:11px; color:#5f5e5a; margin-top:4px; font-style:italic; }
+  .caveat { font-size:11px; color:#856404; background:#fbf6e8; border:1px solid #e8dcaf; border-radius:4px; padding:8px 10px; margin: 10px 0 16px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div>
+    <h1>Dry Cargo Signal Terminal</h1>
+    <div class="sub">Shipping economics desk &mdash; Stopford framework</div>
+  </div>
+  <div class="updated" id="updatedAt">Updated Aug 12, 2026 &middot; 19:03 UTC &middot; includes TradeWinds (grunde@fjeldheimops.com)</div>
+</header>
+
+<nav>
+  <button class="tabbtn active" data-tab="oil">Oil price</button>
+  <button class="tabbtn" data-tab="bunker">Bunker price</button>
+  <button class="tabbtn" data-tab="signal">Signal</button>
+  <button class="tabbtn" data-tab="noise">Noise</button>
+</nav>
+
+<div class="panel active" id="oil">
+  <div class="grid">
+    <div class="card">
+      <div class="label">Brent crude</div>
+      <div class="value">$88.91</div>
+      <div class="delta flat">&#9644; ~flat (Aug 12), 6th straight up session into $89</div>
+    </div>
+    <div class="card">
+      <div class="label">1-month change</div>
+      <div class="value">+6.74%</div>
+      <div class="delta flat">Brent, trailing 30 days</div>
+    </div>
+    <div class="card">
+      <div class="label">Year-on-year</div>
+      <div class="value">+35.48%</div>
+      <div class="delta flat">Brent vs Aug 2025</div>
+    </div>
+  </div>
+  <section>
+    <h2>What's moving it</h2>
+    <p>Brent has strengthened for six consecutive sessions, holding just under $89/bbl on Aug 12 as fading hopes for a US&ndash;Iran agreement and continued uncertainty over the Strait of Hormuz keep a geopolitical risk premium in the price. President Trump said the US had "total control over the Strait of Hormuz" this week, while Pakistan's defense minister separately suggested Washington and Tehran were "close to some sort of arrangement" &mdash; the mixed signals are what's driving day-to-day volatility around the $89 level. Partly offsetting: EIA data showed US crude inventories rose 17.4 million barrels last week, the biggest weekly build since early 2023.</p>
+    <div class="note">Oil price feeds the terminal mainly as a bunker-cost driver and a macro-demand proxy (energy trade volumes). A geopolitical spike in crude is <strong>not</strong> the same signal as a structural change in dry bulk supply/demand &mdash; see the Signal vs Noise tabs before reacting to this move.</div>
+  </section>
+
+  <div class="articles">
+    <h2>Articles &amp; commentary</h2>
+    <div class="caveat">Chapter references below point to the general topic area in Martin Stopford's <em>Maritime Economics</em> (freight market mechanics, ship demand, shipping cycles). They are thematic pointers, not verified page/chapter numbers &mdash; I don't have the book text to cite precisely. All "Stopford's framework" notes are my analysis applying his published principles, not statements he has made about these specific articles.</div>
+
+    <div class="article">
+      <div class="art-head">Brent Crude Oil Hold Near $89</div>
+      <div class="art-meta">Aug 12, 2026 <span class="sep">&middot;</span> Trading Economics <span class="sep">&middot;</span> tradingeconomics.com/commodity/brent-crude-oil/news/574723</div>
+      <div class="stopford"><span class="stopford-label">Per Stopford's framework:</span> a six-session run driven by conflicting Hormuz/Iran headlines is the expectations-and-behaviour amplifier at work &mdash; sentiment swinging on rhetoric, not on any change to dry-cargo tonne-mile demand or fleet supply.
+        <span class="chapter">Theme area: expectations and behaviour in shipping markets &mdash; Maritime Economics (chapter number not verified)</span>
+      </div>
+    </div>
+
+    <div class="article">
+      <div class="art-head">Oil prices today: WTI, Brent, Red Sea</div>
+      <div class="art-meta">Aug 12, 2026 <span class="sep">&middot;</span> CNBC <span class="sep">&middot;</span> cnbc.com/2026/08/12/oil-prices-today-wti-brent-red-sea.html</div>
+      <div class="stopford"><span class="stopford-label">Per Stopford's framework:</span> Red Sea/Hormuz routing risk is a cost and distance input for shipping broadly, but on its own it's background context for the dry-cargo model here, not a cycle indicator.</div>
+    </div>
+
+    <div class="article">
+      <div class="art-head">Crude Oil Price Today: August 7, 2026</div>
+      <div class="art-meta">Aug 7, 2026 <span class="sep">&middot;</span> Forbes Advisor <span class="sep">&middot;</span> forbes.com/advisor/investing/oil-prices-today</div>
+      <div class="stopford"><span class="stopford-label">Per Stopford's framework:</span> oil price is mainly a cost input (bunker fuel) and a macro trade-demand proxy in this model &mdash; it isn't itself a dry-cargo supply/demand signal. Treat it as background context, not as a cycle indicator.
+        <span class="chapter">Theme area: ship operating costs / demand for sea transport &mdash; Maritime Economics (chapter number not verified)</span>
+      </div>
+    </div>
+
+    <div class="article">
+      <div class="art-head">Current price of oil as of Aug. 7, 2026</div>
+      <div class="art-meta">Aug 7, 2026 <span class="sep">&middot;</span> Fortune <span class="sep">&middot;</span> fortune.com/article/price-of-oil-08-07-2026</div>
+      <div class="stopford"><span class="stopford-label">Per Stopford's framework:</span> the Hormuz-driven risk premium is a sentiment/expectations move, one of the behavioural amplifiers Stopford describes on top of the structural cycle &mdash; it can reverse as fast as it appeared.
+        <span class="chapter">Theme area: expectations and behaviour in shipping markets &mdash; Maritime Economics (chapter number not verified)</span>
+      </div>
+    </div>
+
+    <div class="article">
+      <div class="art-head">Brent crude oil &mdash; live price series</div>
+      <div class="art-meta">Live data page, no single publish date <span class="sep">&middot;</span> TradingEconomics <span class="sep">&middot;</span> tradingeconomics.com/commodity/brent-crude-oil</div>
+      <div class="stopford"><span class="stopford-label">Per Stopford's framework:</span> a reference data feed rather than an article &mdash; used here only to source the current price and daily/monthly deltas.</div>
+    </div>
+  </div>
+</div>
+
+<div class="panel" id="bunker">
+  <div class="grid">
+    <div class="card">
+      <div class="label">VLSFO Singapore</div>
+      <div class="value">$872/mt</div>
+      <div class="delta up">&#9650; $32/mt on the day, Aug 11, 2026</div>
+    </div>
+    <div class="card">
+      <div class="label">VLSFO Singapore (Aug 4)</div>
+      <div class="value">$857/mt</div>
+      <div class="delta flat">prior reference point</div>
+    </div>
+    <div class="card">
+      <div class="label">VLSFO&minus;HSFO spread (Singapore)</div>
+      <div class="value">$250/mt</div>
+      <div class="delta flat">as of Aug 11, 2026 ($872 VLSFO vs $622 HSFO)</div>
+    </div>
+  </div>
+  <section>
+    <h2>What's moving it</h2>
+    <p>Singapore bunker prices rose across every grade on Aug 11: VLSFO up $32/mt to $872/mt (a two-week high), B30-VLSFO up $39/mt to $1,043/mt, LSMGO up $39/mt to $1,192/mt, and HSFO up $17/mt to $622/mt &mdash; broadly tracking the Brent rally on the Oil tab. Rotterdam remains a data gap for August: the most recent confirmed print found in search is $608/mt VLSFO on Jul 10, 2026, over a month old, so treat any current Rotterdam figure as unverified until a fresher source turns up.</p>
+    <div class="note">Data gap: no confirmed Aug 2026 Rotterdam VLSFO print was found in this search pass. Treat any Rotterdam figure not shown here as unverified &mdash; it will be filled in once a reliable source is found in a future update.</div>
+  </section>
+
+  <div class="articles">
+    <h2>Articles &amp; commentary</h2>
+    <div class="article">
+      <div class="art-head">Singapore prices rise across all bunker fuel grades</div>
+      <div class="art-meta">Aug 11, 2026 <span class="sep">&middot;</span> Engine <span class="sep">&middot;</span> engine.online/news/singapore-prices-rise-across-all-bunker-fuel-grades-7f9a</div>
+      <div class="stopford"><span class="stopford-label">Per Stopford's framework:</span> bunker cost is part of owners' operating expenditure, which Stopford treats as the effective floor for freight rates in the trough phase of the cycle. A sharp bunker spike compresses owner margins before it shows up in headline freight rates.
+        <span class="chapter">Theme area: cost of operating ships / opex and the rate floor &mdash; Maritime Economics (chapter number not verified)</span>
+      </div>
+    </div>
+    <div class="article">
+      <div class="art-head">MABUX: Global Bunker Prices on the Rise</div>
+      <div class="art-meta">Publish date not confirmed in search <span class="sep">&middot;</span> Hellenic Shipping News (via MABUX) <span class="sep">&middot;</span> hellenicshippingnews.com/mabux-global-bunker-prices-on-the-rise</div>
+      <div class="stopford"><span class="stopford-label">Per Stopford's framework:</span> same read as above &mdash; a cost-side pressure on owners, not a cargo-demand signal. Doesn't move the Signal tab on its own.</div>
+    </div>
+  </div>
+</div>
+
+<div class="panel" id="signal">
+  <div class="verdict">
+    <div class="label">Working read</div>
+    <p>Structural indicators point toward a building supply overhang: fleet growth is outrunning demolition, and the orderbook is expanding fastest in the largest size classes. BIMCO's own July 2026 outlook now puts a number on it: 2027 fleet supply is projected to grow 3.5&ndash;4.5%, roughly three times faster than the 0.5&ndash;3.0% demand growth it expects (the range depends on whether the Strait of Hormuz reopens). BIMCO's added nuance is important &mdash; a meaningful share of 2026's apparent demand strength is tonne-mile inflation from forced Hormuz rerouting, not real cargo growth, which makes the coming supply/demand gap look even more structural than a simple "orders are up" headline would suggest. This is a read of public data, not a trading recommendation.</p>
+  </div>
+  <table>
+    <tr><th>Metric</th><th>Reading</th><th>Read</th></tr>
+    <tr><td>Orderbook / active fleet</td><td>~10% of fleet (by vessel count)</td><td><span class="tag noise">watch</span></td></tr>
+    <tr><td>Ultramax orderbook/fleet ratio</td><td>27.9% (505 vessels on order)</td><td><span class="tag signal">bearish</span></td></tr>
+    <tr><td>Newcastlemax orderbook/fleet ratio</td><td>34.2%, up from 18.8% in 2025 (178 vs 94 vessels)</td><td><span class="tag signal">bearish</span></td></tr>
+    <tr><td>2026 newbuild deliveries (H1)</td><td>310 vessels vs 266 in H1 2025 (+16.5%)</td><td><span class="tag signal">bearish</span></td></tr>
+    <tr><td>Scrapping activity</td><td>4&ndash;13 vessels/yr; 17-year low in early 2025</td><td><span class="tag signal">bearish</span></td></tr>
+    <tr><td>Average scrapping age</td><td>22 yrs (Cape), 24&ndash;26 yrs (Panamax/Supra), ~30 yrs (Handy)</td><td><span class="tag signal">bearish</span></td></tr>
+    <tr><td>2027 supply vs demand growth (BIMCO)</td><td>Supply +3.5&ndash;4.5% vs demand +0.5&ndash;3.0% (scenario-dependent on Hormuz)</td><td><span class="tag signal">bearish</span></td></tr>
+    <tr><td>Chinese bulker shipyard orders</td><td>+173% y/y as of mid-2026</td><td><span class="tag signal">bearish</span></td></tr>
+    <tr><td>Newbuild capesize charters</td><td>DryDel locks in 5-year time charters for a capesize newbuilding quartet (TradeWinds alert, Aug 4)</td><td><span class="tag signal">bearish</span></td></tr>
+  </table>
+  <section>
+    <h2>Why this is signal, per Stopford</h2>
+    <p>These are the "structural" variables Stopford-style analysis treats as high-signal: orderbook-to-fleet ratio, the delivery pipeline, and scrapping behaviour. They move slowly and reflect real capital decisions, so they're a much better guide to where freight rates are headed over the next 2&ndash;4 years than any single day's spot rate. Right now they're telling a consistent story &mdash; owners are still ordering, Chinese yards are booking a surge of new bulker contracts, and very few ships are being scrapped even though ships are running well past historical scrapping age. BIMCO's 2027 forecast is the clearest confirmation yet: it explicitly separates the rerouting-driven tonne-mile boost propping up 2026 from the underlying capacity build-out, and finds supply outpacing demand under every scenario it modeled for next year.</p>
+    <div class="note signalbox">Entry-point logic from the framework: the best time to act is when supply is being <em>destroyed</em> (high scrapping, thin orderbook) &mdash; that's not the current picture.</div>
+  </section>
+
+  <div class="articles">
+    <h2>Articles &amp; commentary</h2>
+    <div class="article">
+      <div class="art-head">Dry Bulk Shipping Faces 2027 Supply Glut: BIMCO Warns Hormuz Rerouting Boost Will Reverse</div>
+      <div class="art-meta">Aug 1, 2026 <span class="sep">&middot;</span> Tech Times <span class="sep">&middot;</span> techtimes.com/articles/322617/20260801/dry-bulk-shipping-faces-2027-supply-glut-bimco-warns-hormuz-rerouting-boost-will-reverse.htm</div>
+      <div class="stopford"><span class="stopford-label">Per Stopford's framework:</span> this is a textbook description of the newbuilding time-lag/overshoot mechanic &mdash; ships ordered years ago keep arriving in 2027 regardless of whether 2026's demand strength (much of it rerouting-driven distance inflation, not real cargo growth) persists. BIMCO's own ~3:1 supply/demand mismatch for 2027 is the clearest structural confirmation yet of the fleet-growth thesis already in this table.
+        <span class="chapter">Theme area: the newbuilding time lag and cycle overshoot &mdash; Maritime Economics (chapter number not verified)</span>
+      </div>
+    </div>
+    <div class="article">
+      <div class="art-head">Global dry bulk fleet growth continues as deliveries outpace removals</div>
+      <div class="art-meta">Publish date not confirmed in search <span class="sep">&middot;</span> SAFETY4SEA <span class="sep">&middot;</span> safety4sea.com/global-dry-bulk-fleet-growth-continues-as-deliveries-outpace-removals</div>
+      <div class="stopford"><span class="stopford-label">Per Stopford's framework:</span> this is exactly the structural signal his framework prioritizes &mdash; deliveries outpacing removals is the fleet-growth half of the capital cycle that historically precedes a rate collapse once the excess tonnage is absorbed.
+        <span class="chapter">Theme area: the shipping capital cycle / merchant fleet growth &mdash; Maritime Economics (chapter number not verified)</span>
+      </div>
+    </div>
+    <div class="article">
+      <div class="art-head">Dry Bulk Weekly Monitor: Dry Bulk Fleet Growth 2025-2026</div>
+      <div class="art-meta">Publish date not confirmed in search <span class="sep">&middot;</span> Hellenic Shipping News <span class="sep">&middot;</span> hellenicshippingnews.com/dry-bulk-weekly-monitor-dry-bulk-fleet-growth-2025-2026</div>
+      <div class="stopford"><span class="stopford-label">Per Stopford's framework:</span> corroborates the SAFETY4SEA read above from a second, independent source &mdash; useful because Stopford stresses cross-checking structural claims rather than relying on one outlet.</div>
+    </div>
+    <div class="article">
+      <div class="art-head">Dry bulk faces potential 'supply overhang' by end-2026</div>
+      <div class="art-meta">Publish date not confirmed in search <span class="sep">&middot;</span> Riviera Maritime <span class="sep">&middot;</span> rivieramm.com/news-content-hub/news-content-hub/dry-bulk-faces-potential-supply-overhang-by-end-2026-84965</div>
+      <div class="stopford"><span class="stopford-label">Per Stopford's framework:</span> "supply overhang" is the direct language of Stopford's oversupply phase of the cycle &mdash; a third source pointing the same direction as the fleet-growth data above.</div>
+    </div>
+    <div class="article">
+      <div class="art-head">Bulker Newbuilding Orders Plunge to Five-Year Low Amid Market Uncertainty</div>
+      <div class="art-meta">Publish date not confirmed in search <span class="sep">&middot;</span> gCaptain / MarineLink <span class="sep">&middot;</span> marinelink.com/news/dry-bulk-newbuild-contracting-falls-515286</div>
+      <div class="stopford"><span class="stopford-label">Per Stopford's framework:</span> falling <em>new</em> contracting alongside strong <em>current</em> deliveries is the time-lag mechanic Stopford describes &mdash; ships ordered two to three years ago are still arriving even as owners' appetite for fresh orders cools. Today's delivery wave is a lagging indicator that's already locked in, regardless of current sentiment.
+        <span class="chapter">Theme area: the newbuilding time lag and cycle overshoot &mdash; Maritime Economics (chapter number not verified)</span>
+      </div>
+    </div>
+    <div class="article">
+      <div class="art-head">DryDel seals five-year time charters for capesize newbuilding quartet</div>
+      <div class="art-meta">Aug 4, 2026 <span class="sep">&middot;</span> TradeWinds (Bulkers alert) <span class="sep">&middot;</span> headline only, paywalled &mdash; sourced from grunde@fjeldheimops.com</div>
+      <div class="stopford"><span class="stopford-label">Per Stopford's framework:</span> locking a newbuilding into a 5-year charter is a capital-cycle commitment &mdash; it signals the owner still expects today's rate environment to hold for years, which is the optimism-at-the-peak behaviour that historically precedes overordering.</div>
+    </div>
+  </div>
+</div>
+
+<div class="panel" id="noise">
+  <div class="grid">
+    <div class="card">
+      <div class="label">Baltic Dry Index</div>
+      <div class="value">2,939</div>
+      <div class="delta down">&#9660; 107 pts (~3.5%), Aug 12 &mdash; reversing the typhoon-driven spike</div>
+    </div>
+    <div class="card">
+      <div class="label">Capesize (BCI)</div>
+      <div class="value">5,105</div>
+      <div class="delta down">&#9660; 23 pts (0.5%), Aug 10; earnings ~$42,797/day (&minus;$212)</div>
+    </div>
+    <div class="card">
+      <div class="label">Panamax (BPI)</div>
+      <div class="value">2,306</div>
+      <div class="delta up">&#9650; 8 pts (0.4%), Aug 10; earnings ~$20,755/day (+$71)</div>
+    </div>
+  </div>
+  <section>
+    <h2>Why this is noise, per Stopford</h2>
+    <p>Spot-rate spikes and single-event disruptions are the category Stopford-style analysis explicitly warns against over-weighting. The BDI's early-August strength had an identifiable one-off driver &mdash; Typhoon Dolphin disrupted routes and pushed rates to a three-week high &mdash; and true to the noise thesis, the index has now given back 107 points (~3.5%) on Aug 12, its steepest one-day drop of the period. Iron ore also eased on weak Chinese factory-gate data, and a strike at BHP's Port Hedland export hub (Australia's largest, first major action there in 25 years) added a second one-off headline, though BHP says shipping impact has been minimal so far.</p>
+    <div class="note noisebox">Rule of thumb applied here: a rate move driven by a named, time-boxed event is noise until it persists for multiple weeks <em>after</em> the event clears. A rate move driven by a change in the orderbook, scrapping rate, or tonne-mile growth is signal. The Aug 12 pullback is the framework's own test playing out in real time &mdash; the typhoon-linked spike is fading roughly as expected.</div>
+  </section>
+
+  <div class="articles">
+    <h2>Articles &amp; commentary</h2>
+    <div class="article">
+      <div class="art-head">Baltic Dry Index falls to 2939 down 107 points</div>
+      <div class="art-meta">Aug 12, 2026 <span class="sep">&middot;</span> Hellenic Shipping News <span class="sep">&middot;</span> hellenicshippingnews.com/baltic-dry-index-falls-to-2939-down-107-points</div>
+      <div class="stopford"><span class="stopford-label">Per Stopford's framework:</span> this is the fade-out phase of the noise event playing out &mdash; the multi-week persistence test in this tab's rule of thumb is now failing, which supports classifying the early-August rally as noise rather than a structural rate move.</div>
+    </div>
+    <div class="article">
+      <div class="art-head">Baltic dry bulk index slips as Capesize rates offset Panamax gains</div>
+      <div class="art-meta">Aug 10, 2026 <span class="sep">&middot;</span> Reuters / Baird Maritime <span class="sep">&middot;</span> bairdmaritime.com/shipping/dry-cargo/bulkers/baltic-dry-bulk-index-slips-as-capesize-rates-offset-panamax-gains</div>
+      <div class="stopford"><span class="stopford-label">Per Stopford's framework:</span> Capesize and Panamax pulling in opposite directions within the same session is ordinary spot-market noise &mdash; no change to the orderbook/scrapping/tonne-mile variables that would move this to Signal.
+        <span class="chapter">Theme area: freight rate formation / short-term market frictions &mdash; Maritime Economics (chapter number not verified)</span>
+      </div>
+    </div>
+    <div class="article">
+      <div class="art-head">Port Hedland strike expands, yet BHP claims minimal shipping impact</div>
+      <div class="art-meta">Aug 10, 2026 <span class="sep">&middot;</span> Reuters / Baird Maritime <span class="sep">&middot;</span> bairdmaritime.com/shipping/ports/port-hedland-strike-expands-yet-bhp-claims-minimal-shipping-impact</div>
+      <div class="stopford"><span class="stopford-label">Per Stopford's framework:</span> a single-company, single-port labour dispute is a classic one-off &mdash; near-perfect competition among owners means no individual port event moves the structural picture unless it escalates past the Aug 18 negotiation date into a sustained loading halt.</div>
+    </div>
+    <div class="article">
+      <div class="art-head">Dry Bulk Shipping Rates Hit Three-Week High on Typhoon Dolphin</div>
+      <div class="art-meta">Aug 5, 2026 <span class="sep">&middot;</span> Bloomberg <span class="sep">&middot;</span> bloomberg.com/news/articles/2026-08-05/dry-bulk-shipping-rates-hit-three-week-high-on-typhoon-dolphin</div>
+      <div class="stopford"><span class="stopford-label">Per Stopford's framework:</span> textbook noise &mdash; a named, time-boxed weather event moving the spot index without touching the fleet/orderbook balance covered in the Signal tab.
+        <span class="chapter">Theme area: freight rate formation / short-term market frictions &mdash; Maritime Economics (chapter number not verified)</span>
+      </div>
+    </div>
+    <div class="article">
+      <div class="art-head">Baltic dry bulk index charges to two-month peak as vessel rates jump</div>
+      <div class="art-meta">Publish date not confirmed in search (referenced ~Aug 7) <span class="sep">&middot;</span> Baird Maritime <span class="sep">&middot;</span> bairdmaritime.com/shipping/dry-cargo/bulkers/baltic-dry-bulk-index-charges-to-two-month-peak-as-vessel-rates-jump</div>
+      <div class="stopford"><span class="stopford-label">Per Stopford's framework:</span> confirms the Typhoon Dolphin-linked rally rather than adding a new structural driver &mdash; still spot-market noise by this framework's rule of thumb.</div>
+    </div>
+    <div class="article">
+      <div class="art-head">Baltic Dry Index | 7 August 2026</div>
+      <div class="art-meta">Aug 7, 2026 <span class="sep">&middot;</span> Handybulk <span class="sep">&middot;</span> handybulk.com/baltic-dry-index</div>
+      <div class="stopford"><span class="stopford-label">Per Stopford's framework:</span> a data reference confirming the index level on this date &mdash; useful for tracking whether the rally persists past the multi-week threshold that would upgrade it from noise to signal.</div>
+    </div>
+    <div class="article">
+      <div class="art-head">Return of El Nino could provide tailwinds for Genco and dry bulk trade</div>
+      <div class="art-meta">Aug 8, 2026 <span class="sep">&middot;</span> TradeWinds (Bulkers alert) <span class="sep">&middot;</span> headline only, paywalled &mdash; sourced from grunde@fjeldheimops.com</div>
+      <div class="stopford"><span class="stopford-label">Per Stopford's framework:</span> single-owner, speculative, weather-pattern story &mdash; discount it until it shows up in tonne-mile or orderbook data over multiple weeks, per the same rule of thumb applied to the typhoon-driven rate spike.</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  This terminal refreshes automatically every day at 21:00 local time via a scheduled search plus your TradeWinds subscription alerts (grunde@fjeldheimops.com). TradeWinds items are cited by headline only &mdash; the full articles sit behind TradeWinds' paywall and are not reproduced here. "Per Stopford's framework" notes are analysis applying his published principles from <em>Maritime Economics</em>, not statements he has made about these specific articles, and chapter references are thematic pointers rather than verified citations. Figures are pulled from public market-news sources at the time of writing and are not a live market feed &mdash; always confirm against a broker or exchange terminal before acting. Not investment advice.
+</footer>
+
+</div>
+<script>
+  document.querySelectorAll('.tabbtn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.tabbtn').forEach(function(b){ b.classList.remove('active'); });
+      document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
