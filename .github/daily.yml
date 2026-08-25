@@ -1,0 +1,170 @@
+name: Daily news update
+
+# Pulls shipping news each weekday, sorts it signal vs noise using Stopford's
+# tests, and writes the result straight into index.html.
+# No API key. No separate script. Add this one file and it runs.
+
+on:
+  schedule:
+    - cron: "40 5 * * 1-5"      # 05:40 UTC ≈ 07:40 Swiss summer time
+  workflow_dispatch:            # gives you a "Run workflow" button
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fetch, classify, and write into the page
+        run: |
+          python3 - <<'PYTHON_SCRIPT'
+          import json, re, html, urllib.request, urllib.error
+          from datetime import datetime, timezone, timedelta
+          from xml.etree import ElementTree as ET
+
+          FEEDS = [
+            ("Splash247",  "https://splash247.com/feed/"),
+            ("Splash247",  "https://splash247.com/category/sector/dry-cargo/feed/"),
+            ("TradeWinds", "https://services.tradewindsnews.com/api/feed/rss"),
+            ("Hellenic",   "https://www.hellenicshippingnews.com/feed/"),
+          ]
+          HOURS = 30
+          PAGE  = "index.html"
+          UA    = "DryCargoSignalTerminal/1.0"
+
+          SIG = [
+            (-5,"supply",r"\borderbook\b","Orderbook movement — the most reliable forward supply indicator. Fixes tonnage arriving years ahead regardless of what rates do next."),
+            (-4,"supply",r"\b(orders?|ordered|ordering|contracted|newbuild\w*)\b.{0,60}\b(bulk\w*|capesize|newcastlemax|kamsarmax|panamax|supramax|ultramax|handysize)","New bulker tonnage contracted. Adds to a fleet already carrying an elevated orderbook; delivery typically two to three years out."),
+            (-3,"supply",r"\b(deliver\w+|handover|christen\w+)\b.{0,50}\b(bulk\w*|capesize|newcastlemax|kamsarmax|ultramax)","Tonnage entering service now. Immediate addition to effective supply."),
+            (+5,"supply",r"\b(scrap\w+|demolit\w+|recycl\w+|beach\w+)\b","Tonnage leaving the fleet. Demolition has been near zero, so any pickup matters more than most headlines — it is the mechanism that clears a surplus."),
+            (+4,"supply",r"\b(laid.?up|lay.?up|cold.?stack\w*)","Tonnage withdrawn from trading. Reduces effective supply without permanent removal."),
+            (+3,"supply",r"\b(detain\w+|arrest\w+|banned|blacklist\w+|sanction\w+)\b.{0,50}\b(vessel|ship|tanker|bulk\w*|fleet)","Tonnage removed from compliant trade. Shrinks the available pool."),
+            (+5,"cost",  r"\b(red sea|bab.?el.?mandeb|suez|hormuz|panama canal)\b","Chokepoint disruption reroutes voyages and absorbs capacity without any ship leaving the fleet. CHECK DIRECTION — reopening reverses this and expands effective supply."),
+            (+4,"cost",  r"\b(congest\w+|queue\w*|berth delay|waiting time|port delay)","Congestion immobilises tonnage. Directly reduces effective supply while it lasts."),
+            (+3,"cost",  r"\b(slow.?steam\w*|speed reduction)","Reduced steaming speed withdraws tonne-mile capacity fleet-wide with no change in ship count."),
+            (+3,"cost",  r"\b(bunker|vlsfo|hsfo|lsmgo|fuel oil)\b.{0,50}\b(tight|short\w*|scarc\w+|lead time|spike|surge|rally|rise)","Fuel scarcity or cost spike changes optimal steaming speed and forces earlier stems. Slower fleet, less effective supply."),
+            (+4,"demand",r"\b(iron ore|coking coal|thermal coal|bauxite|grain|soybean)\b.{0,60}\b(export|import|shipment|volume|demand|surge|record)","Commodity flow change feeding directly into tonne-mile demand."),
+            (+3,"demand",r"\b(tonne.?mile|ton.?mile)\b","Direct tonne-mile measure — the actual unit of dry bulk demand."),
+            (-4,"demand",r"\b(export ban|import ban|tariff|quota|embargo)\b","Trade restriction removes or reroutes cargo. Check direction — a reroute can lengthen voyages and add tonne-miles."),
+          ]
+          NOISE = [
+            ("NO-CAPACITY-PATH", r"\b(launch\w*|unveil\w*|debut\w*|platform|software|start.?up|AI\b|artificial intelligence|machine learning|digital\w*)","Technology or vendor announcement. Adds, removes and immobilises exactly zero ships."),
+            ("NO-CAPACITY-PATH", r"\b(appoint\w+|promot\w+|steps? down|resign\w+|obituar\w+|award\w*|anniversar\w+|conference|webinar|summit|forum)","People, prizes or events. No capacity path."),
+            ("NO-CAPACITY-PATH", r"\b(partner\w+|team\w+ up|collaborat\w+|memorandum|MoU)","Commercial partnership. Announces intent, not tonnage."),
+            ("WRONG-SECTOR",     r"\b(offshore wind|subsea|seismic|drilling rig|jack.?up|FPSO|cruise|ferry|yacht)","Wrong sector. No dry bulk read-across."),
+            ("SINGLE-EVENT",     r"\b(aground|grounded|collision|fire aboard|rescued|refloat\w+|man overboard)","Single-vessel incident. Reclassifies only if it repeats or closes a route for days."),
+            ("ALREADY-IN-PRICE", r"\b(BDI|baltic dry index)\b.{0,40}\b(up|down|rose|fell|gained|slipped|point)","The daily index tick — output of the system reported back as though it were an input."),
+          ]
+          REL = re.compile(r"bulk|bulker|capesize|newcastlemax|kamsarmax|panamax|supramax|ultramax|handysize|dry\s*cargo|iron\s*ore|coal|grain|bauxite|BDI|baltic|freight|charter|tonne.?mile|orderbook|newbuild|shipyard|deliver|scrap|demolit|recycl|bunker|VLSFO|HSFO|fuel\s*oil|congestion|red\s*sea|suez|hormuz|panama\s*canal|houthi|sanction|tariff", re.I)
+
+          def txt(s):
+              return re.sub(r"\s+"," ",html.unescape(re.sub(r"<[^>]+>"," ",s or ""))).strip()
+
+          def dt(s):
+              if not s: return None
+              v = re.sub(r"([+-]\d{2}):(\d{2})$",r"\1\2",s.strip().replace("Z","+0000"))
+              for f in ("%a, %d %b %Y %H:%M:%S %z","%a, %d %b %Y %H:%M:%S %Z","%Y-%m-%dT%H:%M:%S%z"):
+                  try:
+                      d = datetime.strptime(v,f)
+                      return d if d.tzinfo else d.replace(tzinfo=timezone.utc)
+                  except ValueError: pass
+              return None
+
+          cutoff = datetime.now(timezone.utc) - timedelta(hours=HOURS)
+          items, seen = [], set()
+          print("")
+          print("FEED STATUS")
+          print("-"*66)
+          for src, url in FEEDS:
+              try:
+                  rq = urllib.request.Request(url, headers={"User-Agent":UA})
+                  raw = urllib.request.urlopen(rq, timeout=30).read()
+                  root = ET.fromstring(raw)
+                  ns = {"a":"http://www.w3.org/2005/Atom"}
+                  nodes = root.findall(".//item")
+                  got = []
+                  if nodes:
+                      for n in nodes:
+                          got.append({"t":txt(n.findtext("title")),"u":(n.findtext("link") or "").strip(),
+                                      "s":txt(n.findtext("description"))[:350],"w":dt(n.findtext("pubDate")),"src":src})
+                  else:
+                      for n in root.findall("a:entry",ns):
+                          lk = n.find("a:link",ns)
+                          got.append({"t":txt(n.findtext("a:title",None,ns)),"u":(lk.get("href") if lk is not None else ""),
+                                      "s":txt(n.findtext("a:summary",None,ns))[:350],"w":dt(n.findtext("a:updated",None,ns)),"src":src})
+                  print("   OK   %-3d items  %s" % (len(got), url))
+                  for it in got:
+                      k = re.sub(r"[^a-z0-9]","",it["t"].lower())[:70]
+                      if not k or k in seen: continue
+                      if it["w"] and it["w"] < cutoff: continue
+                      seen.add(k); items.append(it)
+              except Exception as e:
+                  print("!! FAIL %-16s %s" % (type(e).__name__, url))
+          print("-"*66)
+
+          def classify(it):
+              blob = it["t"] + " " + it["s"]
+              d = it["w"].strftime("%d %b %Y") if it["w"] else "undated"
+              for tag, pat, why in NOISE:
+                  if re.search(pat, blob, re.I):
+                      return {"sig":0,"s":0,"t":it["t"],"src":it["src"],"d":d,"url":it["u"],"cat":"noise",
+                              "why":"<b>Rejected — %s.</b> %s" % (tag.replace("-"," ").lower(), why),
+                              "tags":[tag,"RULE-BASED"]}
+              sc, ms, cs = 0, [], []
+              for w, cat, pat, why in SIG:
+                  if re.search(pat, blob, re.I):
+                      sc += w; ms.append(why); cs.append(cat)
+              if not ms or abs(sc) < 3:
+                  return {"sig":0,"s":0,"t":it["t"],"src":it["src"],"d":d,"url":it["u"],"cat":"noise",
+                          "why":"<b>Rejected — below threshold.</b> No supply, demand or effective-supply mechanism matched strongly enough to score.",
+                          "tags":["SUB-THRESHOLD","RULE-BASED"]}
+              sc = max(-10, min(10, sc))
+              cat = max(set(cs), key=cs.count)
+              return {"sig":1,"s":sc,"t":it["t"],"src":it["src"],"d":d,"url":it["u"],"cat":cat,
+                      "why":"<b>Mechanism:</b> " + " ".join(ms[:2]) + " <b>Matched by keyword, not understood — read the headline yourself.</b>",
+                      "tags":[cat.upper(),"RULE-BASED","VERIFY"]}
+
+          rel  = [i for i in items if REL.search(i["t"] + " " + i["s"])]
+          arts = [classify(i) for i in rel]
+          arts.sort(key=lambda a: (-a["sig"], -abs(a["s"])))
+          sig  = sum(1 for a in arts if a["sig"])
+          print("%d items -> %d relevant -> %d signal / %d noise" % (len(items), len(rel), sig, len(arts)-sig))
+
+          if not arts:
+              print("Nothing relevant today. Page left untouched.")
+              raise SystemExit(0)
+
+          page = open(PAGE, encoding="utf-8").read()
+          if "/*SIGNALS_START*/" not in page:
+              raise SystemExit("ERROR: index.html has no /*SIGNALS_START*/ marker. "
+                               "Make sure you uploaded the index.html that came with this workflow.")
+
+          block = "/*SIGNALS_START*/\nlet ARTICLES=" + json.dumps(arts, ensure_ascii=False, indent=1) + ";\n/*SIGNALS_END*/"
+          page  = re.sub(r"/\*SIGNALS_START\*/.*?/\*SIGNALS_END\*/", lambda m: block, page, flags=re.S)
+
+          now  = datetime.now(timezone.utc)
+          srcs = " · ".join(sorted({s for s,_ in FEEDS}))
+          status = ('<!--STATUS_START-->FEED: <span style="color:var(--bull)">' + srcs.upper() + '</span> &middot; '
+                    'UPDATED ' + now.strftime("%d %b %H:%M") + ' UTC &middot; '
+                    + str(sig) + ' SIGNAL / ' + str(len(arts)-sig) + ' NOISE FROM ' + str(len(items)) + ' ITEMS &middot; '
+                    '<span style="color:var(--muted)">rule-based classification</span><!--STATUS_END-->')
+          page = re.sub(r"<!--STATUS_START-->.*?<!--STATUS_END-->", lambda m: status, page, flags=re.S)
+
+          open(PAGE, "w", encoding="utf-8").write(page)
+          print("Wrote %d articles into %s" % (len(arts), PAGE))
+          PYTHON_SCRIPT
+
+      - name: Commit
+        run: |
+          git config user.name  "news-bot"
+          git config user.email "actions@github.com"
+          git add index.html
+          git diff --staged --quiet || git commit -m "news $(date -u '+%Y-%m-%d %H:%M')"
+          git push
