@@ -78,7 +78,7 @@
     <h1>Dry Cargo Signal Terminal</h1>
     <div class="sub">Shipping economics desk &mdash; Stopford framework</div>
   </div>
-  <div class="updated" id="updatedAt"><!--STATUS_START-->LIVE FEED &middot; UPDATED 29 Sep 2026 19:24 UTC<br><span style="color:#3b6d11">GMAIL OK (2)</span> &middot; RSS 4/4 &middot; 61 new &middot; 22 signal / 39 noise (7d)<!--STATUS_END--><br><span class="reviewed">Analyst review &amp; prices: 19 Aug 2026</span></div>
+  <div class="updated" id="updatedAt"><!--STATUS_START-->LIVE FEED &middot; UPDATED 29 Sep 2026 19:36 UTC<br><span style="color:#3b6d11">GMAIL OK (2)</span> &middot; RSS 4/4 &middot; BRENT FAIL (kept last) &middot; 62 new &middot; 23 signal / 40 noise (7d)<!--STATUS_END--><br><span class="reviewed">Analyst notes: 19 Aug 2026 &middot; Brent: auto (EIA)</span></div>
 </header>
 
 <nav>
@@ -89,7 +89,8 @@
 </nav>
 
 <div class="panel active" id="oil">
-  <div class="grid">
+  <!--OIL_CARDS_START-->
+<div class="grid">
     <div class="card">
       <div class="label">Brent crude</div>
       <div class="value">$91.51</div>
@@ -106,8 +107,9 @@
       <div class="delta flat">data gap &mdash; not found this pass</div>
     </div>
   </div>
+<!--OIL_CARDS_END-->
   <section>
-    <h2>What's moving it</h2>
+    <h2>What's moving it &mdash; analyst note, 19 Aug 2026</h2>
     <p>Brent held a firm bid at $91.51/bbl on Aug 19, up modestly on the day. The move sits inside a broader run of Gulf-risk headlines rather than a single new catalyst: TradeWinds alerts in the last 26 hours show Sinokor VLCCs loading Saudi crude in the Gulf as Aramco restarts exports around continuing attacks, Oslo tanker stocks rallying as charterers scramble to replace Middle Eastern and Russian barrels, and a report that the UAE has halted trade with Iran after missiles were aimed at its ships. None of this is dry-cargo-specific &mdash; it is background context for the bunker-cost and general Gulf-risk picture, not a bulk carrier supply/demand signal in its own right.</p>
     <div class="note">Oil price feeds this terminal mainly as a bunker-cost driver and a Gulf-risk proxy. A crude-price move on tanker/Gulf headlines is <strong>not</strong> the same signal as a structural change in dry bulk supply or demand &mdash; see the Signal vs Noise tabs before reacting to this move.</div>
   </section>
@@ -135,7 +137,8 @@
 </div>
 
 <div class="panel" id="bunker">
-  <div class="grid">
+  <!--BUNKER_CARDS_START-->
+<div class="grid">
     <div class="card">
       <div class="label">VLSFO Singapore</div>
       <div class="value">$835/mt</div>
@@ -152,10 +155,11 @@
       <div class="delta up">&#9650; +$13.50/mt on the day, Aug 19, 2026</div>
     </div>
   </div>
+<!--BUNKER_CARDS_END-->
   <section>
-    <h2>What's moving it</h2>
+    <h2>What's moving it &mdash; analyst note, 19 Aug 2026</h2>
     <p>Singapore bunker prices were mixed on Aug 19: VLSFO eased slightly to $835/mt while HSFO and LSMGO both firmed, narrowing the VLSFO&ndash;HSFO spread to roughly $165/mt. The moves track the broader Gulf-risk premium in crude rather than any dry-bulk-specific driver. Rotterdam is a data gap this pass &mdash; no current print was found in search; treat any Rotterdam figure not shown here as unverified.</p>
-    <div class="note">Data gap: no confirmed Aug 2026 Rotterdam bunker print was found this pass. HSFO/LSMGO levels above are sourced from Bunker Index; a same-day Ship &amp; Bunker check (Aug 18 print: VLSFO $833/mt, LSMGO $1,257/mt) is broadly consistent but not identical &mdash; treat the figures above as indicative Singapore levels, not a reconciled single feed.</div>
+    <div class="note">Data gap: no confirmed Aug 2026 Rotterdam bunker print was found this pass. The 19 Aug HSFO ($670/mt) and LSMGO ($1,263.50/mt) prints were sourced from Bunker Index; a same-day Ship &amp; Bunker check (Aug 18 print: VLSFO $833/mt, LSMGO $1,257/mt) is broadly consistent but not identical &mdash; treat the figures above as indicative Singapore levels, not a reconciled single feed.</div>
   </section>
 
   <div class="articles">
@@ -1036,12 +1040,29 @@ let ARTICLES=[
   "why": "\u003cb>Mechanism:\u003c/b> Chokepoint disruption reroutes voyages and absorbs capacity without any ship leaving the fleet. CHECK DIRECTION — reopening reverses this and expands effective supply. \u003cb>Matched by keyword, not understood — read the headline yourself.\u003c/b>"
  },
  {
-  "t": "* Iran says it can reopen the Strait of Hormuz within seven days if Was…",
+  "t": "Iran says it can reopen the Strait of Hormuz within seven days if Was…",
   "src": "LNG Global",
   "via": "email",
   "d": "28 Sep 2026",
   "ts": "2026-09-28T17:15+00:00",
-  "url": "https://www.google.com/search?q=%22%2A+Iran+says+it+can+reopen+the+Strait+of+Hormuz+within+seven+days+if+Was%E2%80%A6%22+LNG+Global",
+  "url": "https://www.google.com/search?q=%22Iran+says+it+can+reopen+the+Strait+of+Hormuz+within+seven+days+if+Was%E2%80%A6%22+LNG+Global",
+  "sig": 1,
+  "s": 5,
+  "cat": "cost",
+  "tags": [
+   "COST",
+   "RULE-BASED",
+   "VERIFY"
+  ],
+  "why": "\u003cb>Mechanism:\u003c/b> Chokepoint disruption reroutes voyages and absorbs capacity without any ship leaving the fleet. CHECK DIRECTION — reopening reverses this and expands effective supply. \u003cb>Matched by keyword, not understood — read the headline yourself.\u003c/b>"
+ },
+ {
+  "t": "Kpler showed no visible QatarEnergy-linked LNG transits through the Strait of Hormuz in August, and multiple laden Ras Laffan …",
+  "src": "LNG Global",
+  "via": "email",
+  "d": "28 Sep 2026",
+  "ts": "2026-09-28T17:15+00:00",
+  "url": "https://www.google.com/search?q=%22Kpler+showed+no+visible+QatarEnergy-linked+LNG+transits+through+the+Strait+of+Hormuz+in+August%2C+and+multiple+laden+Ras+Laffan+%E2%80%A6%22+LNG+Global",
   "sig": 1,
   "s": 5,
   "cat": "cost",
@@ -1139,6 +1160,22 @@ let ARTICLES=[
   "d": "28 Sep 2026",
   "ts": "2026-09-28T17:15+00:00",
   "url": "https://www.google.com/search?q=%22Global+Physical+Energy+Trader+Signals+%3A+September+20%E2%80%9325%2C+2026%22+LNG+Global",
+  "sig": 0,
+  "s": 0,
+  "cat": "noise",
+  "tags": [
+   "SUB-THRESHOLD",
+   "RULE-BASED"
+  ],
+  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
+ },
+ {
+  "t": "QatarEnergy will not deliver LNG cargoes to Edison until the beginning of December, adding six cancelled cargoes to bring unde…",
+  "src": "LNG Global",
+  "via": "email",
+  "d": "28 Sep 2026",
+  "ts": "2026-09-28T17:15+00:00",
+  "url": "https://www.google.com/search?q=%22QatarEnergy+will+not+deliver+LNG+cargoes+to+Edison+until+the+beginning+of+December%2C+adding+six+cancelled+cargoes+to+bring+unde%E2%80%A6%22+LNG+Global",
   "sig": 0,
   "s": 0,
   "cat": "noise",
