@@ -5,6 +5,7 @@ Daily refresh for the Dry Cargo Signal Terminal.
 Sources
   1. Gmail (primary)  - shipping newsletters, read over IMAP with an app password.
   2. RSS   (backup)   - public feeds; many block GitHub's servers, so failures are expected.
+  3. Brent            - U.S. EIA spot price via FRED (public domain) -> Oil and Bunker price cards.
 
 Output
   Rewrites the block between /*SIGNALS_START*/ ... /*SIGNALS_END*/ and
@@ -114,7 +115,10 @@ def html_to_text(h):
     return html.unescape(h)
 
 def first_sentence(p, cap=170):
-    s = re.split(r"(?<=[.!?])\s+(?=[A-Z\"“])", p, maxsplit=1)[0].strip()
+    p = re.sub(r"^[\s\*\-•·–—\d\.\)\]:]+", "", p).strip()      # strip "1.", "*", "•" list markers
+    s = re.split(r"(?<=[a-z0-9%\)][.!?])\s+(?=[A-Z\"“])", p, maxsplit=1)[0].strip()
+    if len(s.split()) < 4:
+        s = p
     if len(s) > cap:
         s = s[:cap].rsplit(" ", 1)[0] + "…"
     return s
@@ -154,7 +158,9 @@ def items_from_message(msg):
         nxt = clean(paras[i + 1]) if i + 1 < len(paras) else ""
         has_link = bool(LINK_RX.search(p)) or "( link )" in p or nxt.startswith("( http") or nxt == "( link )"
         if has_link and 40 <= len(body) <= 450 and not BOILER.search(body):
-            out.append({"t": first_sentence(body), "s": body[:450], "w": when, "src": src, "via": "email"})
+            t = first_sentence(body)
+            if len(t.split()) >= 4:
+                out.append({"t": t, "s": body[:450], "w": when, "src": src, "via": "email"})
 
     if subject and not BOILER.search(subject):
         out.insert(0, {"t": subject[:170], "s": lead[:450], "w": when, "src": src, "via": "email"})
@@ -273,6 +279,128 @@ def classify(it):
                 why="<b>Mechanism:</b> " + " ".join(ms[:2]) + " <b>Matched by keyword, not understood — read the headline yourself.</b>")
 
 # --------------------------------------------------------------------------
+# Prices
+#   Brent: U.S. EIA daily Europe Brent spot via FRED (series DCOILBRENTEU).
+#          Public domain, no API key. EIA publishes weekly, so the latest
+#          print is usually 3-8 days old; the card always shows its date.
+#   VLSFO: no free source that may legally be republished on a public page.
+#          Ship & Bunker's terms forbid redistribution, so the page links to
+#          their live prices instead of copying them.
+# --------------------------------------------------------------------------
+FRED_URL = "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DCOILBRENTEU&cosd="
+LAST_BUNKER_PRINT = {"date": "2026-08-19", "vlsfo_sg": 835.0}   # last manual Singapore VLSFO print
+SNB_URL = "https://shipandbunker.com/prices"
+
+def fetch_brent():
+    start = (datetime.now(timezone.utc) - timedelta(days=420)).strftime("%Y-%m-%d")
+    rq = urllib.request.Request(FRED_URL + start, headers={"User-Agent": UA})
+    raw = urllib.request.urlopen(rq, timeout=30).read().decode("utf-8", "replace")
+    rows = []
+    for line in raw.splitlines()[1:]:
+        parts = line.strip().split(",")
+        if len(parts) != 2:
+            continue
+        try:
+            rows.append((datetime.strptime(parts[0], "%Y-%m-%d").date(), float(parts[1])))
+        except ValueError:
+            continue                                   # "." or blank = market holiday
+    if len(rows) < 30:
+        raise ValueError("only %d Brent observations returned" % len(rows))
+    return rows
+
+def on_or_before(rows, day):
+    best = None
+    for d, v in rows:
+        if d <= day:
+            best = (d, v)
+    return best
+
+def fmt_d(d):
+    return d.strftime("%d %b %Y").lstrip("0")
+
+def pct(a, b):
+    return (a / b - 1.0) * 100.0
+
+def arrow(x):
+    return ("up", "&#9650;") if x > 0 else ("down", "&#9660;") if x < 0 else ("flat", "&#9644;")
+
+def card(label, value, delta_cls, delta_html):
+    return ('    <div class="card">\n      <div class="label">%s</div>\n      <div class="value">%s</div>\n'
+            '      <div class="delta %s">%s</div>\n    </div>\n' % (label, value, delta_cls, delta_html))
+
+def price_blocks(rows):
+    d0, v0 = rows[-1]
+    d1, v1 = rows[-2]
+    m = on_or_before(rows, d0 - timedelta(days=30))
+    y = on_or_before(rows, d0 - timedelta(days=365))
+    ch = v0 - v1
+    cls, arr = arrow(ch)
+    oil = '  <div class="grid">\n'
+    oil += card("Brent crude (Europe spot)", "$%.2f" % v0, cls,
+                "%s %+.2f%% vs previous print &middot; %s" % (arr, pct(v0, v1), fmt_d(d0)))
+    oil += card("Change vs previous print", "%s$%.2f" % ("+" if ch >= 0 else "&minus;", abs(ch)), "flat",
+                "%s vs %s" % (fmt_d(d0), fmt_d(d1)))
+    mtxt = "%+.1f%%" % pct(v0, m[1]) if m else "&mdash;"
+    ytxt = "%+.1f%%" % pct(v0, y[1]) if y else "&mdash;"
+    oil += card("1-month / year-on-year change", "%s / %s" % (mtxt, ytxt), "flat",
+                "vs %s ($%.2f) / %s ($%.2f)" % (fmt_d(m[0]), m[1], fmt_d(y[0]), y[1]) if m and y else "insufficient history")
+    oil += "  </div>\n"
+    oil += ('  <div class="caveat">Source: U.S. Energy Information Administration, Europe Brent spot (FOB), via FRED series '
+            '<a href="https://fred.stlouisfed.org/series/DCOILBRENTEU" target="_blank" rel="noopener">DCOILBRENTEU</a> &mdash; public domain. '
+            'EIA publishes weekly, so the latest print is usually a few days old. Updated automatically each morning.</div>\n')
+
+    bd = datetime.strptime(LAST_BUNKER_PRINT["date"], "%Y-%m-%d").date()
+    b = on_or_before(rows, bd)
+    bunker = '  <div class="grid">\n'
+    bunker += card("VLSFO &mdash; live quotes", '<a href="%s" target="_blank" rel="noopener" style="color:inherit">Ship &amp; Bunker &rarr;</a>' % SNB_URL,
+                   "flat", "Singapore, Rotterdam, Fujairah, Global 20 avg. Linked, not copied (their licence forbids republishing).")
+    bunker += card("VLSFO Singapore &mdash; last manual print", "$%s/mt" % format(LAST_BUNKER_PRINT["vlsfo_sg"], ",.0f"), "flat",
+                   "%s &middot; entered by hand" % fmt_d(bd))
+    if b:
+        bc = pct(v0, b[1])
+        c2, a2 = arrow(bc)
+        bunker += card("Brent since that print", "%+.1f%%" % bc, c2,
+                       "%s $%.2f (%s) &rarr; $%.2f (%s)%s" % (a2, b[1], fmt_d(b[0]), v0, fmt_d(d0),
+                       " &middot; bunker print likely stale" if abs(bc) >= 5 else ""))
+    bunker += "  </div>\n"
+    return oil, bunker, "BRENT OK (%s)" % d0.strftime("%d %b")
+
+# --------------------------------------------------------------------------
+# One-time page migration: adds price markers to an index.html that predates them.
+# Safe to run every day; does nothing once the markers exist.
+# --------------------------------------------------------------------------
+def migrate(page):
+    def wrap_grid(page, panel_id, tag):
+        if "<!--%s_START-->" % tag in page:
+            return page
+        i = page.find('id="%s">' % panel_id)
+        j = page.find('<div class="grid">', i)
+        k = page.find("<section>", j)
+        if i < 0 or j < 0 or k < 0:
+            return page
+        return page[:j] + "<!--%s_START-->\n" % tag + page[j:k].rstrip() + "\n<!--%s_END-->\n  " % tag + page[k:]
+    page = wrap_grid(page, "oil", "OIL_CARDS")
+    page = wrap_grid(page, "bunker", "BUNKER_CARDS")
+    page = page.replace("Analyst review &amp; prices: 19 Aug 2026", "Analyst notes: 19 Aug 2026 &middot; Brent: auto (EIA)")
+    page = page.replace("HSFO/LSMGO levels above are sourced from Bunker Index",
+                        "The 19 Aug HSFO ($670/mt) and LSMGO ($1,263.50/mt) prints were sourced from Bunker Index")
+    page = page.replace("<h2>What's moving it</h2>", "<h2>What's moving it &mdash; analyst note, 19 Aug 2026</h2>")
+    return page
+
+def update_prices(page):
+    try:
+        oil, bunker, state = price_blocks(fetch_brent())
+    except Exception as e:
+        log("   FAIL Brent (FRED): %s: %s" % (type(e).__name__, e))
+        return page, "BRENT FAIL (kept last)"
+    log("   OK   %s" % state)
+    page = re.sub(r"<!--OIL_CARDS_START-->.*?<!--OIL_CARDS_END-->",
+                  lambda m: "<!--OIL_CARDS_START-->\n" + oil + "<!--OIL_CARDS_END-->", page, flags=re.S)
+    page = re.sub(r"<!--BUNKER_CARDS_START-->.*?<!--BUNKER_CARDS_END-->",
+                  lambda m: "<!--BUNKER_CARDS_START-->\n" + bunker + "<!--BUNKER_CARDS_END-->", page, flags=re.S)
+    return page, state
+
+# --------------------------------------------------------------------------
 # Page I/O
 # --------------------------------------------------------------------------
 BLOCK_RX  = re.compile(r"/\*SIGNALS_START\*/.*?/\*SIGNALS_END\*/", re.S)
@@ -288,7 +416,7 @@ def load_previous(page):
         return []
 
 def main():
-    page = open(PAGE, encoding="utf-8").read()
+    page = migrate(open(PAGE, encoding="utf-8").read())
     if not BLOCK_RX.search(page) or not STATUS_RX.search(page):
         sys.exit("ERROR: index.html is missing the /*SIGNALS_START*/ or <!--STATUS_START--> markers.")
 
@@ -297,6 +425,7 @@ def main():
     if g_err:
         log("!! " + g_err)
     r_items, r_state = rss_items()
+    page, b_state = update_prices(page)
     log("-" * 66)
 
     fresh, seen = [], set()
@@ -334,7 +463,7 @@ def main():
     health_ok = g_err is None
     g_col = "#3b6d11" if health_ok else "#a32d2d"
     status = ("<!--STATUS_START-->LIVE FEED &middot; UPDATED " + now.strftime("%d %b %Y %H:%M") + " UTC<br>"
-              '<span style="color:' + g_col + '">' + html.escape(g_state) + "</span> &middot; " + html.escape(r_state) + " &middot; "
+              '<span style="color:' + g_col + '">' + html.escape(g_state) + "</span> &middot; " + html.escape(r_state) + " &middot; " + html.escape(b_state) + " &middot; "
               + str(len(fresh)) + " new &middot; " + str(nsig) + " signal / " + str(len(arts) - nsig) + " noise (" + str(KEEP_DAYS) + "d)"
               "<!--STATUS_END-->")
     page = STATUS_RX.sub(lambda m: status, page)
