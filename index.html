@@ -3,7 +3,7 @@
 {
   "name": "Dry Cargo Signal Terminal",
   "schemaVersion": 1,
-  "description": "Dry Cargo Signal Terminal: four-tab dashboard (oil price, bunker price, signal, noise) applying Martin Stopford's maritime economics framework to distinguish structural dry bulk supply/demand signals from short-term rate noise. Refreshed daily via scheduled web search."
+  "description": "Dry Cargo Signal Terminal: four-tab dashboard (oil price, bunker price, signal, noise) applying Martin Stopford's maritime economics framework to distinguish structural dry bulk supply/demand signals from short-term rate noise. News refreshed daily from Gmail shipping newsletters via GitHub Actions."
 }
 </script>
 <html>
@@ -61,6 +61,13 @@
   .caveat { font-size:11px; color:#856404; background:#fbf6e8; border:1px solid #e8dcaf; border-radius:4px; padding:8px 10px; margin: 10px 0 16px; }
   .score { font-weight:700; }
   .rejtag { display:inline-block; font-size:10px; font-weight:700; padding:1px 6px; border-radius:3px; letter-spacing:0.3px; background:#e5e3da; color:#5f5e5a; font-family:"SF Mono", Consolas, monospace; }
+  .live-head { display:flex; justify-content:space-between; align-items:baseline; gap:8px; flex-wrap:wrap; }
+  .pill { display:inline-block; font-size:10px; font-weight:700; padding:1px 6px; border-radius:3px; background:#e5e3da; color:#5f5e5a; font-family:"SF Mono", Consolas, monospace; margin-right:4px; }
+  .art-head a { color:inherit; text-decoration:none; border-bottom:1px dotted #b4b2a9; }
+  .art-head a:hover { border-bottom-color:#1c1c1a; }
+  .empty { font-size:12.5px; color:#5f5e5a; padding:10px 0; }
+  .reviewed { font-size:11px; color:#856404; }
+  @media (max-width:600px){ header{flex-direction:column;align-items:flex-start;gap:8px} .updated{text-align:left;max-width:none} nav{overflow-x:auto} }
 </style>
 </head>
 <body>
@@ -71,7 +78,7 @@
     <h1>Dry Cargo Signal Terminal</h1>
     <div class="sub">Shipping economics desk &mdash; Stopford framework</div>
   </div>
-  <div class="updated" id="updatedAt">Updated Aug 19, 2026 &middot; 19:25 UTC &middot; includes TradeWinds (grunde@fjeldheimops.com) &middot; 4 signal / 11 noise from 15 items</div>
+  <div class="updated" id="updatedAt"><!--STATUS_START-->LIVE FEED &middot; waiting for first run<!--STATUS_END--><br><span class="reviewed">Analyst review &amp; prices: 19 Aug 2026</span></div>
 </header>
 
 <nav>
@@ -106,7 +113,7 @@
   </section>
 
   <div class="articles">
-    <h2>Articles &amp; commentary</h2>
+    <h2>Articles &amp; commentary &mdash; 19 Aug 2026</h2>
     <div class="caveat">Chapter references below point to the general topic area in Martin Stopford's <em>Maritime Economics</em> (freight market mechanics, ship demand, shipping cycles). They are thematic pointers, applying his published principles &mdash; not verified page or chapter citations.</div>
 
     <div class="article">
@@ -152,7 +159,7 @@
   </section>
 
   <div class="articles">
-    <h2>Articles &amp; commentary</h2>
+    <h2>Articles &amp; commentary &mdash; 19 Aug 2026</h2>
     <div class="article">
       <div class="art-head">Singapore Bunker Prices &mdash; VLSFO, IFO380 (HSFO), LSMGO</div>
       <div class="art-meta">Aug 19, 2026 <span class="sep">&middot;</span> Bunker Index <span class="sep">&middot;</span> bunkerindex.com/prices/port.php?p=682&amp;n=singapore-singapore</div>
@@ -169,8 +176,14 @@
 </div>
 
 <div class="panel" id="signal">
+  <div class="articles" style="margin-top:0">
+    <div class="live-head"><h2>Live feed &mdash; signal</h2><span class="pill">AUTO &middot; RULE-BASED</span></div>
+    <div class="caveat">Refreshed daily from shipping newsletters in Gmail (plus public RSS where reachable). Classified by keyword rules applying Stopford's supply / demand / effective-supply tests &mdash; a first pass, not a judgement. Email items show the headline only; the link opens a web search for the story.</div>
+    <div id="liveSignal"><div class="empty">No items yet.</div></div>
+  </div>
+
   <div class="verdict">
-    <div class="label">Working read</div>
+    <div class="label">Working read &middot; analyst review 19 Aug 2026</div>
     <p>A genuinely two-sided day. The structural, slow-moving variable Stopford weighs most heavily &mdash; the global newbuilding orderbook &mdash; is growing at its fastest pace since the eve of 2008, a cross-sector wave that is bearish for freight over a 2&ndash;4 year horizon regardless of what dry bulk's own share of it turns out to be (not broken out in the source; treated as a data gap, not assumed). Running against that: escalating, repeating attacks on bulk carriers in both the Black Sea and the Persian Gulf/Hormuz are sustaining the war-risk and rerouting premium that has been propping up effective tonne-mile demand, and a drought-driven Panama Canal draft squeeze is starting to add distance to the smaller bulk segments. The single largest risk to the bullish side of this ledger is the same one flagged in the source material itself: a Red Sea/Hormuz de-escalation would reverse the diversion premium within weeks, landing a still-swelling orderbook into a thinner market. This is a read of public reporting, not a trading recommendation.</p>
   </div>
 
@@ -197,7 +210,7 @@
   </section>
 
   <div class="articles">
-    <h2>Articles &amp; commentary</h2>
+    <h2>Analyst review &mdash; 19 Aug 2026</h2>
     <div class="article">
       <div class="art-head">Burning Greek bulker abandoned as five Russian-trading ships attacked in Black Sea</div>
       <div class="art-meta">Aug 19, 2026 <span class="sep">&middot;</span> TradeWinds (Bulkers alert) <span class="sep">&middot;</span> headline only, paywalled &mdash; sourced from grunde@fjeldheimops.com</div>
@@ -236,6 +249,12 @@
 </div>
 
 <div class="panel" id="noise">
+  <div class="articles" style="margin-top:0">
+    <div class="live-head"><h2>Live feed &mdash; noise</h2><span class="pill">AUTO &middot; RULE-BASED</span></div>
+    <div class="caveat">Refreshed daily from shipping newsletters in Gmail (plus public RSS where reachable). Classified by keyword rules applying Stopford's supply / demand / effective-supply tests &mdash; a first pass, not a judgement. Email items show the headline only; the link opens a web search for the story.</div>
+    <div id="liveNoise"><div class="empty">No items yet.</div></div>
+  </div>
+
   <div class="grid">
     <div class="card">
       <div class="label">Baltic Dry Index</div>
@@ -260,7 +279,7 @@
   </section>
 
   <div class="articles">
-    <h2>Articles &amp; commentary</h2>
+    <h2>Analyst review &mdash; 19 Aug 2026</h2>
     <div class="article">
       <div class="art-head">Baltic Dry Index falls to 2815, down 63 points</div>
       <div class="art-meta">Aug 18, 2026 <span class="sep">&middot;</span> Hellenic Shipping News <span class="sep">&middot;</span> hellenicshippingnews.com/baltic-dry-index-falls-to-2815-down-63-points/</div>
@@ -320,10 +339,35 @@
 </div>
 
 <footer>
-  This terminal refreshes daily via a scheduled search plus your TradeWinds subscription alerts (grunde@fjeldheimops.com). TradeWinds items are cited by headline only &mdash; the full articles sit behind TradeWinds' paywall and are not reproduced here, per source terms. "Per Stopford's framework" notes are analysis applying his published principles from <em>Maritime Economics</em>, not statements he has made about these specific articles, and chapter references are thematic pointers rather than verified citations. Figures are pulled from public market-news sources at the time of writing and are not a live market feed &mdash; always confirm against a broker or exchange terminal before acting. No recommendation is stated as certain; see the Signal tab for what would make each read wrong. Not investment advice.
+  The live feed refreshes daily at 06:40 CET from shipping newsletters received in Gmail and public RSS feeds, via GitHub Actions. Newsletter items are cited by headline only &mdash; article text and subscriber links are never published. Classification is rule-based and marked VERIFY: read the source before acting. Price cards and analyst review sections are dated and updated manually.
 </footer>
 
 </div>
+<script>
+/*SIGNALS_START*/
+let ARTICLES=[];
+/*SIGNALS_END*/
+(function(){
+  function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];}); }
+  function card(a){
+    var head = a.url ? '<a href="'+esc(a.url)+'" target="_blank" rel="noopener noreferrer">'+esc(a.t)+'</a>' : esc(a.t);
+    var score = a.sig ? '<span class="tag '+(a.s>0?'bullish':'bearish')+'">'+(a.s>0?'+':'')+a.s+' '+(a.s>0?'RATE-SUPPORTIVE':'RATE-NEGATIVE')+'</span> ' : '<span class="tag noise">NOISE</span> ';
+    var tags = (a.tags||[]).map(function(t){return '<span class="pill">'+esc(t)+'</span>';}).join('');
+    return '<div class="article"><div class="art-head">'+head+'</div>'+
+      '<div class="art-meta">'+esc(a.d)+'<span class="sep">&middot;</span>'+esc(a.src)+(a.via==='email'?' (newsletter, headline only)':'')+'</div>'+
+      '<div>'+score+tags+'</div>'+
+      '<div class="stopford"><span class="stopford-label">Per Stopford\'s framework:</span> '+a.why+'</div></div>';
+  }
+  function fill(id, list, emptyMsg){
+    var el=document.getElementById(id); if(!el) return;
+    el.innerHTML = list.length ? list.map(card).join('') : '<div class="empty">'+emptyMsg+'</div>';
+  }
+  var sig=ARTICLES.filter(function(a){return a.sig;}).sort(function(a,b){return (b.ts>a.ts)-(b.ts<a.ts) || Math.abs(b.s)-Math.abs(a.s);});
+  var noi=ARTICLES.filter(function(a){return !a.sig;});
+  fill('liveSignal', sig, 'No item passed the signal tests in the last 7 days.');
+  fill('liveNoise',  noi, 'No noise items in the last 7 days.');
+})();
+</script>
 <script>
   document.querySelectorAll('.tabbtn').forEach(function(btn){
     btn.addEventListener('click', function(){
