@@ -78,7 +78,7 @@
     <h1>Dry Cargo Signal Terminal</h1>
     <div class="sub">Shipping economics desk &mdash; Stopford framework</div>
   </div>
-  <div class="updated" id="updatedAt"><!--STATUS_START-->LIVE FEED &middot; UPDATED 21 Oct 2026 09:37 UTC<br><span style="color:#3b6d11">GMAIL OK (2)</span> &middot; RSS 3/4 &middot; BRENT FAIL (kept last) &middot; 50 new &middot; 20 signal / 60 noise (7d)<!--STATUS_END--><br><span class="reviewed">Analyst notes: 19 Aug 2026 &middot; Brent: auto (EIA)</span></div>
+  <div class="updated" id="updatedAt"><!--STATUS_START-->LIVE FEED &middot; UPDATED 22 Oct 2026 09:37 UTC<br><span style="color:#3b6d11">GMAIL OK (2)</span> &middot; RSS 3/4 &middot; BRENT FAIL (kept last) &middot; 44 new &middot; 22 signal / 58 noise (7d)<!--STATUS_END--><br><span class="reviewed">Analyst notes: 19 Aug 2026 &middot; Brent: auto (EIA)</span></div>
 </header>
 
 <nav>
@@ -351,6 +351,447 @@
 /*SIGNALS_START*/
 let ARTICLES=[
  {
+  "t": "FuelEU ups liquefied biomethane usage, but pricing must stack up",
+  "src": "TradeWinds",
+  "via": "rss",
+  "d": "22 Oct 2026",
+  "ts": "2026-10-22T08:50+00:00",
+  "url": "https://www.tradewindsnews.com/gas/fueleu-ups-liquefied-biomethane-usage-but-pricing-must-stack-up/2-1-2060097",
+  "sig": 0,
+  "s": 0,
+  "cat": "noise",
+  "tags": [
+   "SUB-THRESHOLD",
+   "RULE-BASED"
+  ],
+  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
+ },
+ {
+  "t": "Panama Canal revenue hits $6.6bn as transits increase",
+  "src": "TradeWinds",
+  "via": "rss",
+  "d": "22 Oct 2026",
+  "ts": "2026-10-22T08:29+00:00",
+  "url": "https://www.tradewindsnews.com/finance/panama-canal-revenue-hits-6-6bn-as-transits-increase/2-1-2062373",
+  "sig": 1,
+  "s": 5,
+  "cat": "cost",
+  "tags": [
+   "COST",
+   "RULE-BASED",
+   "VERIFY"
+  ],
+  "why": "\u003cb>Mechanism:\u003c/b> Chokepoint disruption reroutes voyages and absorbs capacity without any ship leaving the fleet. CHECK DIRECTION — reopening reverses this and expands effective supply. \u003cb>Matched by keyword, not understood — read the headline yourself.\u003c/b>"
+ },
+ {
+  "t": "Global shipbuilding boom moves into overdrive",
+  "src": "Splash247",
+  "via": "rss",
+  "d": "22 Oct 2026",
+  "ts": "2026-10-22T08:16+00:00",
+  "url": "https://splash247.com/global-shipbuilding-boom-moves-into-overdrive/",
+  "sig": 1,
+  "s": -5,
+  "cat": "supply",
+  "tags": [
+   "SUPPLY",
+   "RULE-BASED",
+   "VERIFY"
+  ],
+  "why": "\u003cb>Mechanism:\u003c/b> Orderbook movement — the most reliable forward supply indicator. Fixes tonnage arriving years ahead regardless of what rates do next. \u003cb>Matched by keyword, not understood — read the headline yourself.\u003c/b>"
+ },
+ {
+  "t": "Tufton fixes eight tankers and bulkers on lucrative new deals as profit jumps",
+  "src": "TradeWinds",
+  "via": "rss",
+  "d": "22 Oct 2026",
+  "ts": "2026-10-22T07:16+00:00",
+  "url": "https://www.tradewindsnews.com/tankers/tufton-fixes-eight-tankers-and-bulkers-on-lucrative-new-deals-as-profit-jumps/2-1-2062398",
+  "sig": 0,
+  "s": 0,
+  "cat": "noise",
+  "tags": [
+   "SUB-THRESHOLD",
+   "RULE-BASED"
+  ],
+  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
+ },
+ {
+  "t": "US sanctions net widens to shipping agents and lawyers",
+  "src": "Splash247",
+  "via": "rss",
+  "d": "22 Oct 2026",
+  "ts": "2026-10-22T07:06+00:00",
+  "url": "https://splash247.com/us-sanctions-net-widens-to-shipping-agents-and-lawyers/",
+  "sig": 1,
+  "s": 3,
+  "cat": "supply",
+  "tags": [
+   "SUPPLY",
+   "RULE-BASED",
+   "VERIFY"
+  ],
+  "why": "\u003cb>Mechanism:\u003c/b> Tonnage removed from compliant trade. Shrinks the available pool. \u003cb>Matched by keyword, not understood — read the headline yourself.\u003c/b>"
+ },
+ {
+  "t": "Iran claims seven vessels hit in new wave of Hormuz attacks",
+  "src": "Splash247",
+  "via": "rss",
+  "d": "22 Oct 2026",
+  "ts": "2026-10-22T07:00+00:00",
+  "url": "https://splash247.com/iran-claims-seven-vessels-hit-in-new-wave-of-hormuz-attacks/",
+  "sig": 1,
+  "s": 5,
+  "cat": "cost",
+  "tags": [
+   "COST",
+   "RULE-BASED",
+   "VERIFY"
+  ],
+  "why": "\u003cb>Mechanism:\u003c/b> Chokepoint disruption reroutes voyages and absorbs capacity without any ship leaving the fleet. CHECK DIRECTION — reopening reverses this and expands effective supply. \u003cb>Matched by keyword, not understood — read the headline yourself.\u003c/b>"
+ },
+ {
+  "t": "Tufton rides stronger markets with fresh tanker and bulker deals",
+  "src": "Splash247",
+  "via": "rss",
+  "d": "22 Oct 2026",
+  "ts": "2026-10-22T06:15+00:00",
+  "url": "https://splash247.com/tufton-rides-stronger-markets-with-fresh-tanker-and-bulker-deals/",
+  "sig": 0,
+  "s": 0,
+  "cat": "noise",
+  "tags": [
+   "SUB-THRESHOLD",
+   "RULE-BASED"
+  ],
+  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
+ },
+ {
+  "t": "Iran targets Gulf STS transfers as it claims fresh batch of Hormuz strikes",
+  "src": "TradeWinds",
+  "via": "rss",
+  "d": "22 Oct 2026",
+  "ts": "2026-10-22T06:13+00:00",
+  "url": "https://www.tradewindsnews.com/casualties/iran-targets-gulf-sts-transfers-as-it-claims-fresh-batch-of-hormuz-strikes/2-1-2062319",
+  "sig": 1,
+  "s": 5,
+  "cat": "cost",
+  "tags": [
+   "COST",
+   "RULE-BASED",
+   "VERIFY"
+  ],
+  "why": "\u003cb>Mechanism:\u003c/b> Chokepoint disruption reroutes voyages and absorbs capacity without any ship leaving the fleet. CHECK DIRECTION — reopening reverses this and expands effective supply. \u003cb>Matched by keyword, not understood — read the headline yourself.\u003c/b>"
+ },
+ {
+  "t": "Aframax tankers in vogue as Asian charterers spurn costly VLCCs",
+  "src": "TradeWinds",
+  "via": "rss",
+  "d": "22 Oct 2026",
+  "ts": "2026-10-21T22:23+00:00",
+  "url": "https://www.tradewindsnews.com/tankers/aframax-tankers-in-vogue-as-asian-charterers-spurn-costly-vlccs/2-1-2061663",
+  "sig": 0,
+  "s": 0,
+  "cat": "noise",
+  "tags": [
+   "SUB-THRESHOLD",
+   "RULE-BASED"
+  ],
+  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
+ },
+ {
+  "t": "VLGC spot rates pull back for second straight week as charterers regain leverage",
+  "src": "TradeWinds",
+  "via": "rss",
+  "d": "21 Oct 2026",
+  "ts": "2026-10-21T21:36+00:00",
+  "url": "https://www.tradewindsnews.com/gas/vlgc-spot-rates-pull-back-for-second-straight-week-as-charterers-regain-leverage/2-1-2062248",
+  "sig": 0,
+  "s": 0,
+  "cat": "noise",
+  "tags": [
+   "SUB-THRESHOLD",
+   "RULE-BASED"
+  ],
+  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
+ },
+ {
+  "t": "Petrobras fixes VLCC in $50m deal that pulls Brazil-Asia spot rate below $600,000 per day",
+  "src": "TradeWinds",
+  "via": "rss",
+  "d": "21 Oct 2026",
+  "ts": "2026-10-21T20:57+00:00",
+  "url": "https://www.tradewindsnews.com/tankers/petrobras-fixes-vlcc-in-50m-deal-that-pulls-brazil-asia-spot-rate-below-600-000-per-day/2-1-2062224",
+  "sig": 0,
+  "s": 0,
+  "cat": "noise",
+  "tags": [
+   "SUB-THRESHOLD",
+   "RULE-BASED"
+  ],
+  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
+ },
+ {
+  "t": "US sanctions shipping agents in wide sweep of facilitators of Iran’s dark fleet",
+  "src": "TradeWinds",
+  "via": "rss",
+  "d": "21 Oct 2026",
+  "ts": "2026-10-21T18:52+00:00",
+  "url": "https://www.tradewindsnews.com/law/us-sanctions-shipping-agents-in-wide-sweep-of-facilitators-of-iran-s-dark-fleet/2-1-2062219",
+  "sig": 1,
+  "s": 3,
+  "cat": "supply",
+  "tags": [
+   "SUPPLY",
+   "RULE-BASED",
+   "VERIFY"
+  ],
+  "why": "\u003cb>Mechanism:\u003c/b> Tonnage removed from compliant trade. Shrinks the available pool. \u003cb>Matched by keyword, not understood — read the headline yourself.\u003c/b>"
+ },
+ {
+  "t": "Trump team turns Iran sanctions sights on legal sector with blacklisting of Greek - Panamanian law firm",
+  "src": "TradeWinds",
+  "via": "rss",
+  "d": "21 Oct 2026",
+  "ts": "2026-10-21T18:50+00:00",
+  "url": "https://www.tradewindsnews.com/law/trump-team-turns-iran-sanctions-sights-on-legal-sector-with-blacklisting-of-greek-panamanian-law-firm/2-1-2062210",
+  "sig": 1,
+  "s": 3,
+  "cat": "supply",
+  "tags": [
+   "SUPPLY",
+   "RULE-BASED",
+   "VERIFY"
+  ],
+  "why": "\u003cb>Mechanism:\u003c/b> Tonnage removed from compliant trade. Shrinks the available pool. \u003cb>Matched by keyword, not understood — read the headline yourself.\u003c/b>"
+ },
+ {
+  "t": "Oldendorff Carriers bulker diverts to rescue migrants",
+  "src": "TradeWinds",
+  "via": "rss",
+  "d": "21 Oct 2026",
+  "ts": "2026-10-21T18:04+00:00",
+  "url": "https://www.tradewindsnews.com/bulkers/oldendorff-carriers-bulker-diverts-to-rescue-migrants/2-1-2062204",
+  "sig": 0,
+  "s": 0,
+  "cat": "noise",
+  "tags": [
+   "SUB-THRESHOLD",
+   "RULE-BASED"
+  ],
+  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
+ },
+ {
+  "t": "Oct 21, 2026 : Woodside Cuts Production Outlook",
+  "src": "LNG Global",
+  "via": "email",
+  "d": "21 Oct 2026",
+  "ts": "2026-10-21T17:01+00:00",
+  "url": "https://www.google.com/search?q=%22Oct+21%2C+2026+%3A+Woodside+Cuts+Production+Outlook%22+LNG+Global",
+  "sig": 0,
+  "s": 0,
+  "cat": "noise",
+  "tags": [
+   "SUB-THRESHOLD",
+   "RULE-BASED"
+  ],
+  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
+ },
+ {
+  "t": "Woodside Energy trims output forecast, to pull back from US ammonia project — Reuters",
+  "src": "LNG Global",
+  "via": "email",
+  "d": "21 Oct 2026",
+  "ts": "2026-10-21T17:01+00:00",
+  "url": "https://www.google.com/search?q=%22Woodside+Energy+trims+output+forecast%2C+to+pull+back+from+US+ammonia+project+%E2%80%94+Reuters%22+LNG+Global",
+  "sig": 0,
+  "s": 0,
+  "cat": "noise",
+  "tags": [
+   "SUB-THRESHOLD",
+   "RULE-BASED"
+  ],
+  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
+ },
+ {
+  "t": "Impacts of UK’s new North Sea gas drilling — AFP",
+  "src": "LNG Global",
+  "via": "email",
+  "d": "21 Oct 2026",
+  "ts": "2026-10-21T17:01+00:00",
+  "url": "https://www.google.com/search?q=%22Impacts+of+UK%E2%80%99s+new+North+Sea+gas+drilling+%E2%80%94+AFP%22+LNG+Global",
+  "sig": 0,
+  "s": 0,
+  "cat": "noise",
+  "tags": [
+   "SUB-THRESHOLD",
+   "RULE-BASED"
+  ],
+  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
+ },
+ {
+  "t": "Nakilat Profits Dinged by Region’s War — Marine Link",
+  "src": "LNG Global",
+  "via": "email",
+  "d": "21 Oct 2026",
+  "ts": "2026-10-21T17:01+00:00",
+  "url": "https://www.google.com/search?q=%22Nakilat+Profits+Dinged+by+Region%E2%80%99s+War+%E2%80%94+Marine+Link%22+LNG+Global",
+  "sig": 0,
+  "s": 0,
+  "cat": "noise",
+  "tags": [
+   "SUB-THRESHOLD",
+   "RULE-BASED"
+  ],
+  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
+ },
+ {
+  "t": "Corporate Shift Signals: Oct 15–21, 2026",
+  "src": "LNG Global",
+  "via": "email",
+  "d": "21 Oct 2026",
+  "ts": "2026-10-21T17:01+00:00",
+  "url": "https://www.google.com/search?q=%22Corporate+Shift+Signals%3A+Oct+15%E2%80%9321%2C+2026%22+LNG+Global",
+  "sig": 0,
+  "s": 0,
+  "cat": "noise",
+  "tags": [
+   "SUB-THRESHOLD",
+   "RULE-BASED"
+  ],
+  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
+ },
+ {
+  "t": "A corporate shift signal marks a change in how a company or state energy company is positioned, such as a deal, a stake change, a…",
+  "src": "LNG Global",
+  "via": "email",
+  "d": "21 Oct 2026",
+  "ts": "2026-10-21T17:01+00:00",
+  "url": "https://www.google.com/search?q=%22A+corporate+shift+signal+marks+a+change+in+how+a+company+or+state+energy+company+is+positioned%2C+such+as+a+deal%2C+a+stake+change%2C+a%E2%80%A6%22+LNG+Global",
+  "sig": 0,
+  "s": 0,
+  "cat": "noise",
+  "tags": [
+   "SUB-THRESHOLD",
+   "RULE-BASED"
+  ],
+  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
+ },
+ {
+  "t": "Incoming super-typhoon sends capesize spot rates spiralling",
+  "src": "TradeWinds",
+  "via": "rss",
+  "d": "21 Oct 2026",
+  "ts": "2026-10-21T15:01+00:00",
+  "url": "https://www.tradewindsnews.com/bulkers/incoming-super-typhoon-sends-capesize-spot-rates-spiralling/2-1-2061970",
+  "sig": 0,
+  "s": 0,
+  "cat": "noise",
+  "tags": [
+   "SUB-THRESHOLD",
+   "RULE-BASED"
+  ],
+  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
+ },
+ {
+  "t": "Why container lines are heading back to the Red Sea",
+  "src": "TradeWinds",
+  "via": "rss",
+  "d": "21 Oct 2026",
+  "ts": "2026-10-21T14:06+00:00",
+  "url": "https://www.tradewindsnews.com/containers/why-container-lines-are-heading-back-to-the-red-sea/2-1-2061987",
+  "sig": 1,
+  "s": 5,
+  "cat": "cost",
+  "tags": [
+   "COST",
+   "RULE-BASED",
+   "VERIFY"
+  ],
+  "why": "\u003cb>Mechanism:\u003c/b> Chokepoint disruption reroutes voyages and absorbs capacity without any ship leaving the fleet. CHECK DIRECTION — reopening reverses this and expands effective supply. \u003cb>Matched by keyword, not understood — read the headline yourself.\u003c/b>"
+ },
+ {
+  "t": "Unsold Brazilian cargoes cut VLCC demand in the Atlantic",
+  "src": "TradeWinds",
+  "via": "rss",
+  "d": "21 Oct 2026",
+  "ts": "2026-10-21T13:32+00:00",
+  "url": "https://www.tradewindsnews.com/tankers/unsold-brazilian-cargoes-cut-vlcc-demand-in-the-atlantic/2-1-2061830",
+  "sig": 0,
+  "s": 0,
+  "cat": "noise",
+  "tags": [
+   "SUB-THRESHOLD",
+   "RULE-BASED"
+  ],
+  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
+ },
+ {
+  "t": "Dark fleet becoming a permanent fixture in world shipping, officials say",
+  "src": "TradeWinds",
+  "via": "rss",
+  "d": "21 Oct 2026",
+  "ts": "2026-10-21T12:44+00:00",
+  "url": "https://www.tradewindsnews.com/tankers/dark-fleet-becoming-a-permanent-fixture-in-world-shipping-officials-say/2-1-2062000",
+  "sig": 1,
+  "s": 3,
+  "cat": "supply",
+  "tags": [
+   "SUPPLY",
+   "RULE-BASED",
+   "VERIFY"
+  ],
+  "why": "\u003cb>Mechanism:\u003c/b> Tonnage removed from compliant trade. Shrinks the available pool. \u003cb>Matched by keyword, not understood — read the headline yourself.\u003c/b>"
+ },
+ {
+  "t": "US involvement vital to curb Russian energy trading, officials say",
+  "src": "TradeWinds",
+  "via": "rss",
+  "d": "21 Oct 2026",
+  "ts": "2026-10-21T11:24+00:00",
+  "url": "https://www.tradewindsnews.com/tankers/us-involvement-vital-to-curb-russian-energy-trading-officials-say/2-1-2061849",
+  "sig": 0,
+  "s": 0,
+  "cat": "noise",
+  "tags": [
+   "SUB-THRESHOLD",
+   "RULE-BASED"
+  ],
+  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
+ },
+ {
+  "t": "Nordic American smashes suezmax charter record in deal with Trafigura",
+  "src": "TradeWinds",
+  "via": "rss",
+  "d": "21 Oct 2026",
+  "ts": "2026-10-21T10:52+00:00",
+  "url": "https://www.tradewindsnews.com/tankers/nordic-american-smashes-suezmax-charter-record-in-deal-with-trafigura/2-1-2061926",
+  "sig": 0,
+  "s": 0,
+  "cat": "noise",
+  "tags": [
+   "SUB-THRESHOLD",
+   "RULE-BASED"
+  ],
+  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
+ },
+ {
+  "t": "Not all tanker newbuildings are equal: Lloyd’s Register picks the future winners",
+  "src": "TradeWinds",
+  "via": "rss",
+  "d": "21 Oct 2026",
+  "ts": "2026-10-21T10:29+00:00",
+  "url": "https://www.tradewindsnews.com/tankers/not-all-tanker-newbuildings-are-equal-lloyd-s-register-picks-the-future-winners/2-1-2061404",
+  "sig": 0,
+  "s": 0,
+  "cat": "noise",
+  "tags": [
+   "SUB-THRESHOLD",
+   "RULE-BASED"
+  ],
+  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
+ },
+ {
   "t": "Container liners’ Suez Canal return supports market outlook, analyst says",
   "src": "TradeWinds",
   "via": "rss",
@@ -390,6 +831,23 @@ let ARTICLES=[
   "d": "21 Oct 2026",
   "ts": "2026-10-21T09:00+00:00",
   "url": "https://www.tradewindsnews.com/bulkers/simandou-iron-ore-volumes-to-boost-bulker-markets-fearnleys-says/2-1-2061703",
+  "sig": 1,
+  "s": 4,
+  "cat": "demand",
+  "tags": [
+   "DEMAND",
+   "RULE-BASED",
+   "VERIFY"
+  ],
+  "why": "\u003cb>Mechanism:\u003c/b> Commodity flow change feeding directly into tonne-mile demand. \u003cb>Matched by keyword, not understood — read the headline yourself.\u003c/b>"
+ },
+ {
+  "t": "Simandou iron ore volumes to boost bulker markets, Fearnley says",
+  "src": "TradeWinds",
+  "via": "rss",
+  "d": "21 Oct 2026",
+  "ts": "2026-10-21T09:00+00:00",
+  "url": "https://www.tradewindsnews.com/bulkers/simandou-iron-ore-volumes-to-boost-bulker-markets-fearnley-says/2-1-2061703",
   "sig": 1,
   "s": 4,
   "cat": "demand",
@@ -649,6 +1107,38 @@ let ARTICLES=[
   "d": "20 Oct 2026",
   "ts": "2026-10-20T16:54+00:00",
   "url": "https://www.google.com/search?q=%22Week+of+Oct+14%E2%80%9320%2C+2026+-+The+Global+Energy+Merchant+persona+is+a+composite%2C+unnamed+physical+trading+house+that+profits+from+reg%E2%80%A6%22+LNG+Global",
+  "sig": 0,
+  "s": 0,
+  "cat": "noise",
+  "tags": [
+   "SUB-THRESHOLD",
+   "RULE-BASED"
+  ],
+  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
+ },
+ {
+  "t": "Who Had a Good LNG Week: Oct 11–16, 2026",
+  "src": "LNG Global",
+  "via": "email",
+  "d": "20 Oct 2026",
+  "ts": "2026-10-20T16:54+00:00",
+  "url": "https://www.google.com/search?q=%22Who+Had+a+Good+LNG+Week%3A+Oct+11%E2%80%9316%2C+2026%22+LNG+Global",
+  "sig": 0,
+  "s": 0,
+  "cat": "noise",
+  "tags": [
+   "SUB-THRESHOLD",
+   "RULE-BASED"
+  ],
+  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
+ },
+ {
+  "t": "Damage is measured in years * Iranian strikes destroyed two Ras La…",
+  "src": "LNG Global",
+  "via": "email",
+  "d": "20 Oct 2026",
+  "ts": "2026-10-20T16:54+00:00",
+  "url": "https://www.google.com/search?q=%22Damage+is+measured+in+years+%2A+Iranian+strikes+destroyed+two+Ras+La%E2%80%A6%22+LNG+Global",
   "sig": 0,
   "s": 0,
   "cat": "noise",
@@ -1161,494 +1651,6 @@ let ARTICLES=[
    "RULE-BASED"
   ],
   "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
- },
- {
-  "t": "Oct 19, 2026 : Qatar cargo rare Red Sea journey",
-  "src": "LNG Global",
-  "via": "email",
-  "d": "19 Oct 2026",
-  "ts": "2026-10-19T16:59+00:00",
-  "url": "https://www.google.com/search?q=%22Oct+19%2C+2026+%3A+Qatar+cargo+rare+Red+Sea+journey%22+LNG+Global",
-  "sig": 1,
-  "s": 5,
-  "cat": "cost",
-  "tags": [
-   "COST",
-   "RULE-BASED",
-   "VERIFY"
-  ],
-  "why": "\u003cb>Mechanism:\u003c/b> Chokepoint disruption reroutes voyages and absorbs capacity without any ship leaving the fleet. CHECK DIRECTION — reopening reverses this and expands effective supply. \u003cb>Matched by keyword, not understood — read the headline yourself.\u003c/b>"
- },
- {
-  "t": "Qatar LNG cargo makes rare Red Sea journey to get gas to Europe — Bloomberg",
-  "src": "LNG Global",
-  "via": "email",
-  "d": "19 Oct 2026",
-  "ts": "2026-10-19T16:59+00:00",
-  "url": "https://www.google.com/search?q=%22Qatar+LNG+cargo+makes+rare+Red+Sea+journey+to+get+gas+to+Europe+%E2%80%94+Bloomberg%22+LNG+Global",
-  "sig": 1,
-  "s": 5,
-  "cat": "cost",
-  "tags": [
-   "COST",
-   "RULE-BASED",
-   "VERIFY"
-  ],
-  "why": "\u003cb>Mechanism:\u003c/b> Chokepoint disruption reroutes voyages and absorbs capacity without any ship leaving the fleet. CHECK DIRECTION — reopening reverses this and expands effective supply. \u003cb>Matched by keyword, not understood — read the headline yourself.\u003c/b>"
- },
- {
-  "t": "Who Had a Good LNG Week: Oct 11–16, 2026",
-  "src": "LNG Global",
-  "via": "email",
-  "d": "19 Oct 2026",
-  "ts": "2026-10-19T16:59+00:00",
-  "url": "https://www.google.com/search?q=%22Who+Had+a+Good+LNG+Week%3A+Oct+11%E2%80%9316%2C+2026%22+LNG+Global",
-  "sig": 0,
-  "s": 0,
-  "cat": "noise",
-  "tags": [
-   "SUB-THRESHOLD",
-   "RULE-BASED"
-  ],
-  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
- },
- {
-  "t": "Ras Laffan damage (Reuters investigation, Oct 15…",
-  "src": "LNG Global",
-  "via": "email",
-  "d": "19 Oct 2026",
-  "ts": "2026-10-19T16:59+00:00",
-  "url": "https://www.google.com/search?q=%22Ras+Laffan+damage+%28Reuters+investigation%2C+Oct+15%E2%80%A6%22+LNG+Global",
-  "sig": 0,
-  "s": 0,
-  "cat": "noise",
-  "tags": [
-   "SUB-THRESHOLD",
-   "RULE-BASED"
-  ],
-  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
- },
- {
-  "t": "Técnicas Reunidas strengthens its presence in North America with a new contract awarded by LNG Canada — Press Release",
-  "src": "LNG Global",
-  "via": "email",
-  "d": "19 Oct 2026",
-  "ts": "2026-10-19T16:59+00:00",
-  "url": "https://www.google.com/search?q=%22T%C3%A9cnicas+Reunidas+strengthens+its+presence+in+North+America+with+a+new+contract+awarded+by+LNG+Canada+%E2%80%94+Press+Release%22+LNG+Global",
-  "sig": 0,
-  "s": 0,
-  "cat": "noise",
-  "tags": [
-   "NO-CAPACITY-PATH",
-   "RULE-BASED"
-  ],
-  "why": "\u003cb>Rejected — no capacity path.\u003c/b> People, prizes or events. No capacity path."
- },
- {
-  "t": "Asian spot LNG prices hit almost four-year high in Oct — Argus",
-  "src": "LNG Global",
-  "via": "email",
-  "d": "19 Oct 2026",
-  "ts": "2026-10-19T16:59+00:00",
-  "url": "https://www.google.com/search?q=%22Asian+spot+LNG+prices+hit+almost+four-year+high+in+Oct+%E2%80%94+Argus%22+LNG+Global",
-  "sig": 0,
-  "s": 0,
-  "cat": "noise",
-  "tags": [
-   "SUB-THRESHOLD",
-   "RULE-BASED"
-  ],
-  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
- },
- {
-  "t": "Damage is measured in years * Iranian strikes destroyed two Ras La…",
-  "src": "LNG Global",
-  "via": "email",
-  "d": "19 Oct 2026",
-  "ts": "2026-10-19T16:59+00:00",
-  "url": "https://www.google.com/search?q=%22Damage+is+measured+in+years+%2A+Iranian+strikes+destroyed+two+Ras+La%E2%80%A6%22+LNG+Global",
-  "sig": 0,
-  "s": 0,
-  "cat": "noise",
-  "tags": [
-   "SUB-THRESHOLD",
-   "RULE-BASED"
-  ],
-  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
- },
- {
-  "t": "Lightship Chartering opens in Shanghai to target newbuilding business",
-  "src": "TradeWinds",
-  "via": "rss",
-  "d": "19 Oct 2026",
-  "ts": "2026-10-19T15:57+00:00",
-  "url": "https://www.tradewindsnews.com/shipbroking/lightship-chartering-opens-in-shanghai-to-target-newbuilding-business/2-1-2060869",
-  "sig": 0,
-  "s": 0,
-  "cat": "noise",
-  "tags": [
-   "SUB-THRESHOLD",
-   "RULE-BASED"
-  ],
-  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
- },
- {
-  "t": "Mercuria no longer claims it has suffered financial losses in Baltic Exchange lawsuit",
-  "src": "TradeWinds",
-  "via": "rss",
-  "d": "19 Oct 2026",
-  "ts": "2026-10-19T15:17+00:00",
-  "url": "https://www.tradewindsnews.com/law/mercuria-no-longer-claims-it-has-suffered-financial-losses-in-baltic-exchange-lawsuit/2-1-2060806",
-  "sig": 0,
-  "s": 0,
-  "cat": "noise",
-  "tags": [
-   "SUB-THRESHOLD",
-   "RULE-BASED"
-  ],
-  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
- },
- {
-  "t": "New Guyanese crude set to boost VLCCs and suezmaxes into Asia",
-  "src": "TradeWinds",
-  "via": "rss",
-  "d": "19 Oct 2026",
-  "ts": "2026-10-19T14:25+00:00",
-  "url": "https://www.tradewindsnews.com/tankers/new-guyanese-crude-set-to-boost-vlccs-and-suezmaxes-into-asia/2-1-2060716",
-  "sig": 0,
-  "s": 0,
-  "cat": "noise",
-  "tags": [
-   "SUB-THRESHOLD",
-   "RULE-BASED"
-  ],
-  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
- },
- {
-  "t": "Capesize spot rates bounce back up above $30,000 level as activity stirs",
-  "src": "TradeWinds",
-  "via": "rss",
-  "d": "19 Oct 2026",
-  "ts": "2026-10-19T12:04+00:00",
-  "url": "https://www.tradewindsnews.com/bulkers/capesize-spot-rates-bounce-back-up-above-30-000-level-as-activity-stirs/2-1-2060627",
-  "sig": 0,
-  "s": 0,
-  "cat": "noise",
-  "tags": [
-   "SUB-THRESHOLD",
-   "RULE-BASED"
-  ],
-  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
- },
- {
-  "t": "RINA ordered to pay $70m over role in Red Sea ferry disaster",
-  "src": "TradeWinds",
-  "via": "rss",
-  "d": "19 Oct 2026",
-  "ts": "2026-10-19T11:46+00:00",
-  "url": "https://www.tradewindsnews.com/law/rina-ordered-to-pay-70m-over-role-in-red-sea-ferry-disaster/2-1-2060656",
-  "sig": 0,
-  "s": 0,
-  "cat": "noise",
-  "tags": [
-   "WRONG-SECTOR",
-   "RULE-BASED"
-  ],
-  "why": "\u003cb>Rejected — wrong sector.\u003c/b> Wrong sector. No dry bulk read-across."
- },
- {
-  "t": "Hai An invests $70m in electric container ship newbuildings",
-  "src": "TradeWinds",
-  "via": "rss",
-  "d": "19 Oct 2026",
-  "ts": "2026-10-19T11:00+00:00",
-  "url": "https://www.tradewindsnews.com/containers/hai-an-invests-70m-in-electric-container-ship-newbuildings/2-1-2060624",
-  "sig": 0,
-  "s": 0,
-  "cat": "noise",
-  "tags": [
-   "SUB-THRESHOLD",
-   "RULE-BASED"
-  ],
-  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
- },
- {
-  "t": "German owner CST linked to sale of its three biggest tankers",
-  "src": "TradeWinds",
-  "via": "rss",
-  "d": "19 Oct 2026",
-  "ts": "2026-10-19T10:28+00:00",
-  "url": "https://www.tradewindsnews.com/tankers/german-owner-cst-linked-to-sale-of-its-three-biggest-tankers/2-1-2060580",
-  "sig": 0,
-  "s": 0,
-  "cat": "noise",
-  "tags": [
-   "SUB-THRESHOLD",
-   "RULE-BASED"
-  ],
-  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
- },
- {
-  "t": "Nanjing Tanker picks Dalian for LR2 quartet",
-  "src": "Splash247",
-  "via": "rss",
-  "d": "19 Oct 2026",
-  "ts": "2026-10-19T10:00+00:00",
-  "url": "https://splash247.com/nanjing-tanker-picks-dalian-for-lr2-quartet/",
-  "sig": 0,
-  "s": 0,
-  "cat": "noise",
-  "tags": [
-   "NO-CAPACITY-PATH",
-   "RULE-BASED"
-  ],
-  "why": "\u003cb>Rejected — no capacity path.\u003c/b> Technology or vendor announcement. Adds, removes and immobilises exactly zero ships."
- },
- {
-  "t": "Hai An lines up $70m feeder newbuild investment",
-  "src": "Splash247",
-  "via": "rss",
-  "d": "19 Oct 2026",
-  "ts": "2026-10-19T09:40+00:00",
-  "url": "https://splash247.com/hai-an-lines-up-70m-feeder-newbuild-investment/",
-  "sig": 0,
-  "s": 0,
-  "cat": "noise",
-  "tags": [
-   "SUB-THRESHOLD",
-   "RULE-BASED"
-  ],
-  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
- },
- {
-  "t": "MSC joins Rheinmetall in €138m Romanian shipyard takeover",
-  "src": "Splash247",
-  "via": "rss",
-  "d": "19 Oct 2026",
-  "ts": "2026-10-19T09:30+00:00",
-  "url": "https://splash247.com/msc-joins-rheinmetall-in-e138m-romanian-shipyard-takeover/",
-  "sig": 0,
-  "s": 0,
-  "cat": "noise",
-  "tags": [
-   "NO-CAPACITY-PATH",
-   "RULE-BASED"
-  ],
-  "why": "\u003cb>Rejected — no capacity path.\u003c/b> Commercial partnership. Announces intent, not tonnage."
- },
- {
-  "t": "Hormuz attacks overwhelm UKMTO",
-  "src": "Splash247",
-  "via": "rss",
-  "d": "19 Oct 2026",
-  "ts": "2026-10-19T08:34+00:00",
-  "url": "https://splash247.com/hormuz-attacks-overwhelm-ukmto/",
-  "sig": 1,
-  "s": 5,
-  "cat": "cost",
-  "tags": [
-   "COST",
-   "RULE-BASED",
-   "VERIFY"
-  ],
-  "why": "\u003cb>Mechanism:\u003c/b> Chokepoint disruption reroutes voyages and absorbs capacity without any ship leaving the fleet. CHECK DIRECTION — reopening reverses this and expands effective supply. \u003cb>Matched by keyword, not understood — read the headline yourself.\u003c/b>"
- },
- {
-  "t": "MISC inks options to double size of its LNG newbuilding orders in China",
-  "src": "TradeWinds",
-  "via": "rss",
-  "d": "19 Oct 2026",
-  "ts": "2026-10-19T08:29+00:00",
-  "url": "https://www.tradewindsnews.com/gas/misc-inks-options-to-double-size-of-its-lng-newbuilding-orders-in-china/2-1-2060534",
-  "sig": 1,
-  "s": -5,
-  "cat": "supply",
-  "tags": [
-   "SUPPLY",
-   "RULE-BASED",
-   "VERIFY"
-  ],
-  "why": "\u003cb>Mechanism:\u003c/b> Orderbook movement — the most reliable forward supply indicator. Fixes tonnage arriving years ahead regardless of what rates do next. \u003cb>Matched by keyword, not understood — read the headline yourself.\u003c/b>"
- },
- {
-  "t": "Manager criticised after falling crane motor hit seafarer on Rio Tinto bulker",
-  "src": "TradeWinds",
-  "via": "rss",
-  "d": "19 Oct 2026",
-  "ts": "2026-10-19T08:12+00:00",
-  "url": "https://www.tradewindsnews.com/casualties/manager-criticised-after-falling-crane-motor-hit-seafarer-on-rio-tinto-bulker/2-1-2060443",
-  "sig": 0,
-  "s": 0,
-  "cat": "noise",
-  "tags": [
-   "NO-CAPACITY-PATH",
-   "RULE-BASED"
-  ],
-  "why": "\u003cb>Rejected — no capacity path.\u003c/b> Technology or vendor announcement. Adds, removes and immobilises exactly zero ships."
- },
- {
-  "t": "COSCO books 16 grain carrier newbuilds",
-  "src": "Splash247",
-  "via": "rss",
-  "d": "19 Oct 2026",
-  "ts": "2026-10-19T08:02+00:00",
-  "url": "https://splash247.com/cosco-books-16-grain-carrier-newbuilds/",
-  "sig": 1,
-  "s": -4,
-  "cat": "supply",
-  "tags": [
-   "SUPPLY",
-   "RULE-BASED",
-   "VERIFY"
-  ],
-  "why": "\u003cb>Mechanism:\u003c/b> New bulker tonnage contracted. Adds to a fleet already carrying an elevated orderbook; delivery typically two to three years out. \u003cb>Matched by keyword, not understood — read the headline yourself.\u003c/b>"
- },
- {
-  "t": "China Merchants and COSCO move to exit Qingdao ore terminal",
-  "src": "Splash247",
-  "via": "rss",
-  "d": "19 Oct 2026",
-  "ts": "2026-10-19T07:30+00:00",
-  "url": "https://splash247.com/china-merchants-and-cosco-move-to-exit-qingdao-ore-terminal/",
-  "sig": 0,
-  "s": 0,
-  "cat": "noise",
-  "tags": [
-   "NO-CAPACITY-PATH",
-   "RULE-BASED"
-  ],
-  "why": "\u003cb>Rejected — no capacity path.\u003c/b> Technology or vendor announcement. Adds, removes and immobilises exactly zero ships."
- },
- {
-  "t": "Global Maritime Forum summit finally opens in China as Asian power rises",
-  "src": "TradeWinds",
-  "via": "rss",
-  "d": "19 Oct 2026",
-  "ts": "2026-10-19T07:08+00:00",
-  "url": "https://www.tradewindsnews.com/sustainability/global-maritime-forum-summit-finally-opens-in-china-as-asian-power-rises/2-1-2060355",
-  "sig": 0,
-  "s": 0,
-  "cat": "noise",
-  "tags": [
-   "NO-CAPACITY-PATH",
-   "RULE-BASED"
-  ],
-  "why": "\u003cb>Rejected — no capacity path.\u003c/b> People, prizes or events. No capacity path."
- },
- {
-  "t": "Ukraine to sell off bulker seized after outbreak of war",
-  "src": "TradeWinds",
-  "via": "rss",
-  "d": "19 Oct 2026",
-  "ts": "2026-10-19T07:05+00:00",
-  "url": "https://www.tradewindsnews.com/bulkers/ukraine-to-sell-off-bulker-seized-after-outbreak-of-war/2-1-2060423",
-  "sig": 0,
-  "s": 0,
-  "cat": "noise",
-  "tags": [
-   "SUB-THRESHOLD",
-   "RULE-BASED"
-  ],
-  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
- },
- {
-  "t": "Cosco Shipping Bulk behind order of 16 grain carriers worth $800m",
-  "src": "TradeWinds",
-  "via": "rss",
-  "d": "19 Oct 2026",
-  "ts": "2026-10-19T06:56+00:00",
-  "url": "https://www.tradewindsnews.com/bulkers/cosco-shipping-bulk-behind-order-of-16-grain-carriers-worth-800m/2-1-2060407",
-  "sig": 1,
-  "s": -4,
-  "cat": "supply",
-  "tags": [
-   "SUPPLY",
-   "RULE-BASED",
-   "VERIFY"
-  ],
-  "why": "\u003cb>Mechanism:\u003c/b> New bulker tonnage contracted. Adds to a fleet already carrying an elevated orderbook; delivery typically two to three years out. \u003cb>Matched by keyword, not understood — read the headline yourself.\u003c/b>"
- },
- {
-  "t": "Ships switch to short-term bunker deals as conflict reshapes market",
-  "src": "TradeWinds",
-  "via": "rss",
-  "d": "19 Oct 2026",
-  "ts": "2026-10-19T05:51+00:00",
-  "url": "https://www.tradewindsnews.com/tankers/ships-switch-to-short-term-bunker-deals-as-conflict-reshapes-market/2-1-2059924",
-  "sig": 0,
-  "s": 0,
-  "cat": "noise",
-  "tags": [
-   "SUB-THRESHOLD",
-   "RULE-BASED"
-  ],
-  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
- },
- {
-  "t": "Ferry fiasco: Infamous Pacificat trio’s 30-year folly ends in Egypt recycling yard",
-  "src": "TradeWinds",
-  "via": "rss",
-  "d": "19 Oct 2026",
-  "ts": "2026-10-19T04:36+00:00",
-  "url": "https://www.tradewindsnews.com/cruise-and-ferry/ferry-fiasco-infamous-pacificat-trio-s-30-year-folly-ends-in-egypt-recycling-yard/2-1-2060379",
-  "sig": 0,
-  "s": 0,
-  "cat": "noise",
-  "tags": [
-   "WRONG-SECTOR",
-   "RULE-BASED"
-  ],
-  "why": "\u003cb>Rejected — wrong sector.\u003c/b> Wrong sector. No dry bulk read-across."
- },
- {
-  "t": "Nanjing Tanker orders aframax product tankers at Dalian Shipyard",
-  "src": "TradeWinds",
-  "via": "rss",
-  "d": "19 Oct 2026",
-  "ts": "2026-10-19T02:01+00:00",
-  "url": "https://www.tradewindsnews.com/tankers/nanjing-tanker-orders-aframax-product-tankers-at-dalian-shipyard/2-1-2060366",
-  "sig": 0,
-  "s": 0,
-  "cat": "noise",
-  "tags": [
-   "SUB-THRESHOLD",
-   "RULE-BASED"
-  ],
-  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
- },
- {
-  "t": "Sell-off of ten Qatari-controlled LNG steamships put on hold",
-  "src": "TradeWinds",
-  "via": "rss",
-  "d": "19 Oct 2026",
-  "ts": "2026-10-19T01:46+00:00",
-  "url": "https://www.tradewindsnews.com/gas/sell-off-of-ten-qatari-controlled-lng-steamships-put-on-hold/2-1-2060359",
-  "sig": 1,
-  "s": 5,
-  "cat": "cost",
-  "tags": [
-   "COST",
-   "RULE-BASED",
-   "VERIFY"
-  ],
-  "why": "\u003cb>Mechanism:\u003c/b> Chokepoint disruption reroutes voyages and absorbs capacity without any ship leaving the fleet. CHECK DIRECTION — reopening reverses this and expands effective supply. \u003cb>Matched by keyword, not understood — read the headline yourself.\u003c/b>"
- },
- {
-  "t": "Sell-off of 10 Qatari-controlled LNG steamships put on hold",
-  "src": "TradeWinds",
-  "via": "rss",
-  "d": "19 Oct 2026",
-  "ts": "2026-10-19T01:46+00:00",
-  "url": "https://www.tradewindsnews.com/gas/sell-off-of-10-qatari-controlled-lng-steamships-put-on-hold/2-1-2060359",
-  "sig": 1,
-  "s": 5,
-  "cat": "cost",
-  "tags": [
-   "COST",
-   "RULE-BASED",
-   "VERIFY"
-  ],
-  "why": "\u003cb>Mechanism:\u003c/b> Chokepoint disruption reroutes voyages and absorbs capacity without any ship leaving the fleet. CHECK DIRECTION — reopening reverses this and expands effective supply. \u003cb>Matched by keyword, not understood — read the headline yourself.\u003c/b>"
  }
 ];
 /*SIGNALS_END*/
