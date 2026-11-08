@@ -78,7 +78,7 @@
     <h1>Dry Cargo Signal Terminal</h1>
     <div class="sub">Shipping economics desk &mdash; Stopford framework</div>
   </div>
-  <div class="updated" id="updatedAt"><!--STATUS_START-->LIVE FEED &middot; UPDATED 07 Nov 2026 11:19 UTC<br><span style="color:#3b6d11">GMAIL OK (3)</span> &middot; RSS 4/4 &middot; BRENT FAIL (kept last) &middot; 57 new &middot; 24 signal / 56 noise (7d)<!--STATUS_END--><br><span class="reviewed">Analyst notes: 19 Aug 2026 &middot; Brent: auto (EIA)</span></div>
+  <div class="updated" id="updatedAt"><!--STATUS_START-->LIVE FEED &middot; UPDATED 08 Nov 2026 11:30 UTC<br><span style="color:#3b6d11">GMAIL OK (1)</span> &middot; RSS 4/4 &middot; BRENT FAIL (kept last) &middot; 10 new &middot; 24 signal / 56 noise (7d)<!--STATUS_END--><br><span class="reviewed">Analyst notes: 19 Aug 2026 &middot; Brent: auto (EIA)</span></div>
 </header>
 
 <nav>
@@ -351,6 +351,22 @@
 /*SIGNALS_START*/
 let ARTICLES=[
  {
+  "t": "Ship casualties mount in the Middle East as the US and Iran set vessels alight",
+  "src": "TradeWinds",
+  "via": "rss",
+  "d": "08 Nov 2026",
+  "ts": "2026-11-08T07:25+00:00",
+  "url": "https://www.tradewindsnews.com/casualties/ship-casualties-mount-in-the-middle-east-as-the-us-and-iran-set-vessels-alight/2-1-2071087",
+  "sig": 0,
+  "s": 0,
+  "cat": "noise",
+  "tags": [
+   "NO-CAPACITY-PATH",
+   "RULE-BASED"
+  ],
+  "why": "\u003cb>Rejected — no capacity path.\u003c/b> Commercial partnership. Announces intent, not tonnage."
+ },
+ {
   "t": "Tanker Fleet Growth Threatens Freight Boom, Bullish Secondhand Markets: Analysts",
   "src": "Hellenic",
   "via": "rss",
@@ -581,6 +597,23 @@ let ARTICLES=[
   "why": "\u003cb>Mechanism:\u003c/b> Chokepoint disruption reroutes voyages and absorbs capacity without any ship leaving the fleet. CHECK DIRECTION — reopening reverses this and expands effective supply. \u003cb>Matched by keyword, not understood — read the headline yourself.\u003c/b>"
  },
  {
+  "t": "Qatar’s LNG exports are recovering. 20 laden LNG carriers crossed Hormuz from Oct 1 to Oct 26, against none …",
+  "src": "LNG Global",
+  "via": "email",
+  "d": "06 Nov 2026",
+  "ts": "2026-11-06T18:29+00:00",
+  "url": "https://www.google.com/search?q=%22Qatar%E2%80%99s+LNG+exports+are+recovering.+20+laden+LNG+carriers+crossed+Hormuz+from+Oct+1+to+Oct+26%2C+against+none+%E2%80%A6%22+LNG+Global",
+  "sig": 1,
+  "s": 5,
+  "cat": "cost",
+  "tags": [
+   "COST",
+   "RULE-BASED",
+   "VERIFY"
+  ],
+  "why": "\u003cb>Mechanism:\u003c/b> Chokepoint disruption reroutes voyages and absorbs capacity without any ship leaving the fleet. CHECK DIRECTION — reopening reverses this and expands effective supply. \u003cb>Matched by keyword, not understood — read the headline yourself.\u003c/b>"
+ },
+ {
   "t": "Nov 6, 2026 : ADNOC SPA Gujarat Energy",
   "src": "LNG Global",
   "via": "email",
@@ -667,6 +700,38 @@ let ARTICLES=[
   "d": "06 Nov 2026",
   "ts": "2026-11-06T18:29+00:00",
   "url": "https://www.google.com/search?q=%22Seat%3A+Global+Director%2C+LNG+EPC+Business+Development+Scale%3A+1%E2%80%9310%2C+EPC+opportunity+lens.+9%2B+ACT+%C2%B7+7%E2%80%938+REPORT+%C2%B7+5%E2%80%936+WATCH+%C2%B7+below+5+%E2%80%A6%22+LNG+Global",
+  "sig": 0,
+  "s": 0,
+  "cat": "noise",
+  "tags": [
+   "SUB-THRESHOLD",
+   "RULE-BASED"
+  ],
+  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
+ },
+ {
+  "t": "Where the Money Is Going: LNG Capital Flows · Oct 29 – Nov 4, 2026",
+  "src": "LNG Global",
+  "via": "email",
+  "d": "06 Nov 2026",
+  "ts": "2026-11-06T18:29+00:00",
+  "url": "https://www.google.com/search?q=%22Where+the+Money+Is+Going%3A+LNG+Capital+Flows+%C2%B7+Oct+29+%E2%80%93+Nov+4%2C+2026%22+LNG+Global",
+  "sig": 0,
+  "s": 0,
+  "cat": "noise",
+  "tags": [
+   "SUB-THRESHOLD",
+   "RULE-BASED"
+  ],
+  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
+ },
+ {
+  "t": "Capital pressure markers in the last week we have tracked.",
+  "src": "LNG Global",
+  "via": "email",
+  "d": "06 Nov 2026",
+  "ts": "2026-11-06T18:29+00:00",
+  "url": "https://www.google.com/search?q=%22Capital+pressure+markers+in+the+last+week+we+have+tracked.%22+LNG+Global",
   "sig": 0,
   "s": 0,
   "cat": "noise",
@@ -1233,23 +1298,6 @@ let ARTICLES=[
   "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
  },
  {
-  "t": "Qatar’s LNG exports are recovering. 20 laden LNG carriers crossed Hormuz from Oct 1 to Oct 26, against none …",
-  "src": "LNG Global",
-  "via": "email",
-  "d": "05 Nov 2026",
-  "ts": "2026-11-05T18:35+00:00",
-  "url": "https://www.google.com/search?q=%22Qatar%E2%80%99s+LNG+exports+are+recovering.+20+laden+LNG+carriers+crossed+Hormuz+from+Oct+1+to+Oct+26%2C+against+none+%E2%80%A6%22+LNG+Global",
-  "sig": 1,
-  "s": 5,
-  "cat": "cost",
-  "tags": [
-   "COST",
-   "RULE-BASED",
-   "VERIFY"
-  ],
-  "why": "\u003cb>Mechanism:\u003c/b> Chokepoint disruption reroutes voyages and absorbs capacity without any ship leaving the fleet. CHECK DIRECTION — reopening reverses this and expands effective supply. \u003cb>Matched by keyword, not understood — read the headline yourself.\u003c/b>"
- },
- {
   "t": "Nov 5, 2026 : Excelerate Energy Bahamas Supply Agreement",
   "src": "LNG Global",
   "via": "email",
@@ -1304,38 +1352,6 @@ let ARTICLES=[
   "d": "05 Nov 2026",
   "ts": "2026-11-05T18:35+00:00",
   "url": "https://www.google.com/search?q=%22Woodside+Energy+flags+new+dividend+policy+and+500+job+cuts+%E2%80%94+Reuters%22+LNG+Global",
-  "sig": 0,
-  "s": 0,
-  "cat": "noise",
-  "tags": [
-   "SUB-THRESHOLD",
-   "RULE-BASED"
-  ],
-  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
- },
- {
-  "t": "Where the Money Is Going: LNG Capital Flows · Oct 29 – Nov 4, 2026",
-  "src": "LNG Global",
-  "via": "email",
-  "d": "05 Nov 2026",
-  "ts": "2026-11-05T18:35+00:00",
-  "url": "https://www.google.com/search?q=%22Where+the+Money+Is+Going%3A+LNG+Capital+Flows+%C2%B7+Oct+29+%E2%80%93+Nov+4%2C+2026%22+LNG+Global",
-  "sig": 0,
-  "s": 0,
-  "cat": "noise",
-  "tags": [
-   "SUB-THRESHOLD",
-   "RULE-BASED"
-  ],
-  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
- },
- {
-  "t": "Capital pressure markers in the last week we have tracked.",
-  "src": "LNG Global",
-  "via": "email",
-  "d": "05 Nov 2026",
-  "ts": "2026-11-05T18:35+00:00",
-  "url": "https://www.google.com/search?q=%22Capital+pressure+markers+in+the+last+week+we+have+tracked.%22+LNG+Global",
   "sig": 0,
   "s": 0,
   "cat": "noise",
@@ -1629,22 +1645,6 @@ let ARTICLES=[
   "d": "05 Nov 2026",
   "ts": "2026-11-05T11:00+00:00",
   "url": "https://www.hellenicshippingnews.com/asian-refiners-view-us-crude-premium-as-cost-of-stable-supply-logistics-security/",
-  "sig": 0,
-  "s": 0,
-  "cat": "noise",
-  "tags": [
-   "SUB-THRESHOLD",
-   "RULE-BASED"
-  ],
-  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
- },
- {
-  "t": "Iron Ore Hits Four-Week High",
-  "src": "Hellenic",
-  "via": "rss",
-  "d": "05 Nov 2026",
-  "ts": "2026-11-05T11:00+00:00",
-  "url": "https://www.hellenicshippingnews.com/iron-ore-hits-four-week-high/",
   "sig": 0,
   "s": 0,
   "cat": "noise",
