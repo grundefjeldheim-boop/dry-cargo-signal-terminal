@@ -78,7 +78,7 @@
     <h1>Dry Cargo Signal Terminal</h1>
     <div class="sub">Shipping economics desk &mdash; Stopford framework</div>
   </div>
-  <div class="updated" id="updatedAt"><!--STATUS_START-->LIVE FEED &middot; UPDATED 21 Nov 2026 13:00 UTC<br><span style="color:#3b6d11">GMAIL OK (3)</span> &middot; RSS 4/4 &middot; BRENT FAIL (kept last) &middot; 39 new &middot; 16 signal / 64 noise (7d)<!--STATUS_END--><br><span class="reviewed">Analyst notes: 19 Aug 2026 &middot; Brent: auto (EIA)</span></div>
+  <div class="updated" id="updatedAt"><!--STATUS_START-->LIVE FEED &middot; UPDATED 22 Nov 2026 12:51 UTC<br><span style="color:#3b6d11">GMAIL OK (1)</span> &middot; RSS 4/4 &middot; BRENT FAIL (kept last) &middot; 9 new &middot; 17 signal / 63 noise (7d)<!--STATUS_END--><br><span class="reviewed">Analyst notes: 19 Aug 2026 &middot; Brent: auto (EIA)</span></div>
 </header>
 
 <nav>
@@ -351,6 +351,55 @@
 /*SIGNALS_START*/
 let ARTICLES=[
  {
+  "t": "Russian ship on fire and abandoned after Baltic Sea drone attack",
+  "src": "TradeWinds",
+  "via": "rss",
+  "d": "22 Nov 2026",
+  "ts": "2026-11-22T08:09+00:00",
+  "url": "https://www.tradewindsnews.com/casualties/russian-ship-on-fire-and-abandoned-after-baltic-sea-drone-attack/2-1-2077726",
+  "sig": 0,
+  "s": 0,
+  "cat": "noise",
+  "tags": [
+   "SUB-THRESHOLD",
+   "RULE-BASED"
+  ],
+  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
+ },
+ {
+  "t": "ASIA LNG MOC PERFORMANCE: Deliveries conclude for record volume of 148.5 TBtu during August MOC",
+  "src": "Hellenic",
+  "via": "rss",
+  "d": "21 Nov 2026",
+  "ts": "2026-11-21T18:00+00:00",
+  "url": "https://www.hellenicshippingnews.com/asia-lng-moc-performance-deliveries-conclude-for-record-volume-of-148-5-tbtu-during-august-moc-2/",
+  "sig": 0,
+  "s": 0,
+  "cat": "noise",
+  "tags": [
+   "SUB-THRESHOLD",
+   "RULE-BASED"
+  ],
+  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
+ },
+ {
+  "t": "Iran strikes two tankers in an hour while transiting Strait of Hormuz",
+  "src": "TradeWinds",
+  "via": "rss",
+  "d": "21 Nov 2026",
+  "ts": "2026-11-21T14:06+00:00",
+  "url": "https://www.tradewindsnews.com/tankers/iran-strikes-two-tankers-in-an-hour-while-transiting-strait-of-hormuz/2-1-2077716",
+  "sig": 1,
+  "s": 5,
+  "cat": "cost",
+  "tags": [
+   "COST",
+   "RULE-BASED",
+   "VERIFY"
+  ],
+  "why": "\u003cb>Mechanism:\u003c/b> Chokepoint disruption reroutes voyages and absorbs capacity without any ship leaving the fleet. CHECK DIRECTION — reopening reverses this and expands effective supply. \u003cb>Matched by keyword, not understood — read the headline yourself.\u003c/b>"
+ },
+ {
   "t": "Fire ignites on tanker in Hormuz strike as transits decline",
   "src": "TradeWinds",
   "via": "rss",
@@ -569,6 +618,38 @@ let ARTICLES=[
   "d": "20 Nov 2026",
   "ts": "2026-11-20T18:32+00:00",
   "url": "https://www.google.com/search?q=%22VINCI+wins+contract+to+build+an+LNG+tank+in+Canada+%E2%80%94+Press+Release%22+LNG+Global",
+  "sig": 0,
+  "s": 0,
+  "cat": "noise",
+  "tags": [
+   "SUB-THRESHOLD",
+   "RULE-BASED"
+  ],
+  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
+ },
+ {
+  "t": "Global Energy Merchant is a trading house persona that profits from moving energy between markets and from price gaps between the…",
+  "src": "LNG Global",
+  "via": "email",
+  "d": "20 Nov 2026",
+  "ts": "2026-11-20T18:32+00:00",
+  "url": "https://www.google.com/search?q=%22Global+Energy+Merchant+is+a+trading+house+persona+that+profits+from+moving+energy+between+markets+and+from+price+gaps+between+the%E2%80%A6%22+LNG+Global",
+  "sig": 0,
+  "s": 0,
+  "cat": "noise",
+  "tags": [
+   "SUB-THRESHOLD",
+   "RULE-BASED"
+  ],
+  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
+ },
+ {
+  "t": "Markers from the last 7 days that show where LNG demand is rising, falling or shifting: who is buying, who is pulling back, and w…",
+  "src": "LNG Global",
+  "via": "email",
+  "d": "20 Nov 2026",
+  "ts": "2026-11-20T18:32+00:00",
+  "url": "https://www.google.com/search?q=%22Markers+from+the+last+7+days+that+show+where+LNG+demand+is+rising%2C+falling+or+shifting%3A+who+is+buying%2C+who+is+pulling+back%2C+and+w%E2%80%A6%22+LNG+Global",
   "sig": 0,
   "s": 0,
   "cat": "noise",
@@ -941,38 +1022,6 @@ let ARTICLES=[
   "d": "19 Nov 2026",
   "ts": "2026-11-19T18:41+00:00",
   "url": "https://www.google.com/search?q=%22Orlen%2C+QatarEnergy+in+talks+on+new+LNG+deal+days+after+contract+termination%2C+sources+say+%E2%80%94+Reuters%22+LNG+Global",
-  "sig": 0,
-  "s": 0,
-  "cat": "noise",
-  "tags": [
-   "SUB-THRESHOLD",
-   "RULE-BASED"
-  ],
-  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
- },
- {
-  "t": "Global Energy Merchant is a trading house persona that profits from moving energy between markets and from price gaps between the…",
-  "src": "LNG Global",
-  "via": "email",
-  "d": "19 Nov 2026",
-  "ts": "2026-11-19T18:41+00:00",
-  "url": "https://www.google.com/search?q=%22Global+Energy+Merchant+is+a+trading+house+persona+that+profits+from+moving+energy+between+markets+and+from+price+gaps+between+the%E2%80%A6%22+LNG+Global",
-  "sig": 0,
-  "s": 0,
-  "cat": "noise",
-  "tags": [
-   "SUB-THRESHOLD",
-   "RULE-BASED"
-  ],
-  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
- },
- {
-  "t": "Markers from the last 7 days that show where LNG demand is rising, falling or shifting: who is buying, who is pulling back, and w…",
-  "src": "LNG Global",
-  "via": "email",
-  "d": "19 Nov 2026",
-  "ts": "2026-11-19T18:41+00:00",
-  "url": "https://www.google.com/search?q=%22Markers+from+the+last+7+days+that+show+where+LNG+demand+is+rising%2C+falling+or+shifting%3A+who+is+buying%2C+who+is+pulling+back%2C+and+w%E2%80%A6%22+LNG+Global",
   "sig": 0,
   "s": 0,
   "cat": "noise",
@@ -1589,54 +1638,6 @@ let ARTICLES=[
   "d": "18 Nov 2026",
   "ts": "2026-11-18T17:47+00:00",
   "url": "https://www.google.com/search?q=%22Nov+18%2C+2026+%3A+Venture+Global+and+China+Gas+Increased+SPA%22+LNG+Global",
-  "sig": 0,
-  "s": 0,
-  "cat": "noise",
-  "tags": [
-   "SUB-THRESHOLD",
-   "RULE-BASED"
-  ],
-  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
- },
- {
-  "t": "Venture Global and China Gas Announce Increased Long-Term LNG Agreement — Press Release",
-  "src": "LNG Global",
-  "via": "email",
-  "d": "18 Nov 2026",
-  "ts": "2026-11-18T17:47+00:00",
-  "url": "https://www.google.com/search?q=%22Venture+Global+and+China+Gas+Announce+Increased+Long-Term+LNG+Agreement+%E2%80%94+Press+Release%22+LNG+Global",
-  "sig": 0,
-  "s": 0,
-  "cat": "noise",
-  "tags": [
-   "SUB-THRESHOLD",
-   "RULE-BASED"
-  ],
-  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
- },
- {
-  "t": "Woodside Energy has signed a sale and purchase agreement with Trafigura — Press Release PDF",
-  "src": "LNG Global",
-  "via": "email",
-  "d": "18 Nov 2026",
-  "ts": "2026-11-18T17:47+00:00",
-  "url": "https://www.google.com/search?q=%22Woodside+Energy+has+signed+a+sale+and+purchase+agreement+with+Trafigura+%E2%80%94+Press+Release+PDF%22+LNG+Global",
-  "sig": 0,
-  "s": 0,
-  "cat": "noise",
-  "tags": [
-   "SUB-THRESHOLD",
-   "RULE-BASED"
-  ],
-  "why": "\u003cb>Rejected — below threshold.\u003c/b> No supply, demand or effective-supply mechanism matched strongly enough to score."
- },
- {
-  "t": "Russia’s Novatek enters Vietnam LNG market with first contract — Reuters",
-  "src": "LNG Global",
-  "via": "email",
-  "d": "18 Nov 2026",
-  "ts": "2026-11-18T17:47+00:00",
-  "url": "https://www.google.com/search?q=%22Russia%E2%80%99s+Novatek+enters+Vietnam+LNG+market+with+first+contract+%E2%80%94+Reuters%22+LNG+Global",
   "sig": 0,
   "s": 0,
   "cat": "noise",
